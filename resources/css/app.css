@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-background text-on-background;
+    }
+}
+
+@layer components {
+    .neo-shadow {
+        box-shadow: 6px 6px 0px 0px #3f3f46;
+        transition: box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+    }
+    .neo-shadow:active {
+        box-shadow: 2px 2px 0px 0px #3f3f46;
+        transform: translate(4px, 4px);
+    }
+    .neo-shadow-primary {
+        box-shadow: 6px 6px 0px 0px #4f46e5;
+    }
+    .neo-shadow-primary:active {
+        box-shadow: 2px 2px 0px 0px #4f46e5;
+        transform: translate(4px, 4px);
+    }
+    .neo-shadow-success {
+        box-shadow: 6px 6px 0px 0px #34d399;
+    }
+    .neo-shadow-danger {
+        box-shadow: 6px 6px 0px 0px #fb7185;
+    }
+    .neo-shadow-warning {
+        box-shadow: 6px 6px 0px 0px #fbbf24;
+    }
+    .neo-shadow-focus {
+        box-shadow: 8px 8px 0px 0px #494bd6;
+    }
+
+    .transaction-row {
+        border-bottom: 2px solid #52525b;
+    }
+    .transaction-row:last-child {
+        border-bottom: none;
+    }
+}

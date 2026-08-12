@@ -70,10 +70,6 @@
                         </a>
                     </div>
 
-                    <p class="mt-6 text-sm font-semibold text-black/60">
-                        Gratis. Tanpa kartu kredit. Langsung pakai hari ini.
-                    </p>
-
                     <!-- Decorative cards -->
                     <div class="mt-20 grid w-full max-w-3xl grid-cols-1 gap-5 sm:grid-cols-3">
                         <div class="rotate-[-3deg] rounded-base border-2 border-border bg-income p-5 text-left shadow-brutal transition hover:rotate-0">
@@ -92,7 +88,6 @@
                             <p class="mt-1 text-sm font-semibold text-black/70">Belum Lunas</p>
                         </div>
                     </div>
-
                 </main>
 
                 <!-- Footer -->
