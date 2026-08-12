@@ -1,3 +1,74 @@
-<div>
-    {{-- Do your work, then step back. --}}
+<div class="flex flex-col gap-md">
+
+    {{-- Screen Header --}}
+    <div class="flex items-center justify-between">
+        <h2 class="font-display text-headline-md text-on-surface uppercase">Daftar Transaksi</h2>
+    </div>
+
+    {{-- Filter Row --}}
+    <div class="flex gap-sm overflow-x-auto pb-2 -mx-margin-mobile px-margin-mobile snap-x">
+        <button wire:click="setFilter('today')"
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'today' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            HARI INI
+        </button>
+        <button wire:click="setFilter('week')"
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'week' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            MINGGU INI
+        </button>
+        <button wire:click="setFilter('month')"
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'month' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            BULAN INI
+        </button>
+        <button wire:click="setFilter('all')"
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'all' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            SEMUA
+        </button>
+    </div>
+
+    {{-- Summary Banner --}}
+    <div class="w-full bg-primary-fixed border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_#464554]">
+        <div class="flex flex-col">
+            <span class="font-sans text-label-caps font-bold text-on-primary-fixed">Total Periode Ini</span>
+            <span class="font-display text-headline-md text-on-primary-fixed">
+                {{ $totalPeriod >= 0 ? '+' : '-' }} Rp {{ number_format(abs($totalPeriod), 0, ',', '.') }}
+            </span>
+        </div>
+        <span class="material-symbols-outlined text-4xl text-on-primary-fixed opacity-50">monitoring</span>
+    </div>
+
+    {{-- Transaction List --}}
+    <div class="flex flex-col gap-base">
+        @forelse ($groupedTransactions as $date => $transactions)
+            <h3 class="font-sans text-label-caps font-bold text-on-surface-variant mb-1 mt-2">{{ $date }}</h3>
+
+            @foreach ($transactions as $transaction)
+                <div wire:key="tx-{{ $transaction->id }}"
+                    class="group relative flex items-center gap-sm p-sm bg-surface-container border-2 border-outline-variant shadow-[4px_4px_0px_0px_#464554] transition-all">
+                    <div class="w-12 h-12 flex items-center justify-center border-2 border-outline-variant shrink-0 {{ $transaction->type === 'income' ? 'bg-secondary' : 'bg-tertiary' }}">
+                        <span class="material-symbols-outlined {{ $transaction->type === 'income' ? 'text-on-secondary' : 'text-on-tertiary' }} text-2xl">
+                            {{ $transaction->type === 'income' ? 'payments' : 'shopping_bag' }}
+                        </span>
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <span class="font-display text-title-sm text-on-surface truncate">{{ $transaction->title }}</span>
+                        <div class="flex items-center gap-2 mt-1 text-on-surface-variant font-sans text-label-caps">
+                            <span>{{ $transaction->created_at->format('H:i') }}</span>
+                            <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+                            <span class="px-2 py-0.5 border border-outline-variant bg-surface">{{ $transaction->category->name }}</span>
+                        </div>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="font-sans text-mono-data block {{ $transaction->type === 'income' ? 'text-secondary' : 'text-tertiary' }}">
+                            {{ $transaction->type === 'income' ? '+' : '-' }} Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                        </span>
+                    </div>
+                </div>
+            @endforeach
+        @empty
+            <div class="bg-surface-container border-2 border-outline-variant p-lg text-center">
+                <p class="font-sans text-body-md text-on-surface-variant">Belum ada transaksi di periode ini.</p>
+            </div>
+        @endforelse
+    </div>
+
 </div>
