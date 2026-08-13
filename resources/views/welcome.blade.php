@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
+
         <script>
             (function () {
                 const stored = localStorage.getItem('theme');
@@ -12,7 +14,7 @@
             })();
         </script>
 
-        <title>{{ config('app.name', 'Catatuang') }} — Duitmu, Kelakuanmu, Kelolamu</title>
+        <title>{{ config('app.name', 'KapanRich') }} — Duitmu, Kelakuanmu, Kelolamu</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,11 +56,10 @@
                 <!-- Header -->
                 <header class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2 overflow-hidden">
-                        <div class="flex h-8 w-8 shrink-0 sm:h-10 sm:w-10 items-center justify-center border-2 border-black dark:border-outline-variant bg-indigo-500 text-sm sm:text-lg font-black text-white shadow-[2px_2px_0px_0px_#000] sm:shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46]">
-                            Rp
-                        </div>
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo KapanRich" class="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10">
+
                         <span class="hidden sm:block font-display text-lg sm:text-xl font-black tracking-tight truncate">
-                            {{ strtoupper(config('app.name', 'Catatuang')) }}
+                            {{ strtoupper(config('app.name', 'KapanRich')) }}
                         </span>
                     </div>
 
@@ -80,8 +81,7 @@
                     <div class="flex flex-col items-center text-center lg:items-start lg:text-left">
 
                         <span class="anim-float inline-block rotate-[-2deg] border-2 border-black dark:border-outline-variant bg-amber-400 px-4 py-1.5 font-display text-sm font-bold shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46]">
-            ✦ NO CAP, INI BENERAN GRATIS
-        </span>
+                            ✦ NO CAP, INI BENERAN GRATIS</span>
 
                         <h1 class="anim-pop-in mt-6 max-w-xl font-display text-5xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-6xl" style="animation-delay: 0.1s">
                             Gajian Numpang<br>
@@ -94,8 +94,7 @@
                         </h1>
 
                         <p class="anim-pop-in mt-6 max-w-md font-sans text-lg font-medium text-black/70 dark:text-on-surface-variant" style="animation-delay: 0.2s">
-                            Catat uang masuk, war diskon, sampe utang temen yang belum balikin —
-                            semua di satu tempat. Ga usah pake Excel jadul, cukup buka HP.
+                            Catat uang masuk, war diskon, sampe utang temen yang belum balikin semua di satu tempat. Ga usah pake Excel jadul, cukup buka HP.
                         </p>
 
                         <div class="anim-pop-in mt-8 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row lg:items-start" style="animation-delay: 0.3s">
@@ -121,15 +120,10 @@
                             <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto overflow-visible">
                                 <!-- Shadow blob dasar -->
                                 <ellipse cx="200" cy="430" rx="120" ry="18" class="fill-black/10 dark:fill-black/40" />
-                                <!-- Backdrop shape -->
                                 <rect x="40" y="30" width="320" height="320" rx="4" class="fill-amber-300 dark:fill-primary-container" stroke="black" stroke-width="4" transform="rotate(-4 200 190)" />
-                                <!-- Rambut belakang -->
                                 <path d="M140 120 Q140 60 200 58 Q260 60 260 120 L260 190 L140 190 Z" fill="#1f1f22" stroke="black" stroke-width="4"/>
-                                <!-- Badan / hoodie -->
                                 <path d="M110 460 L110 330 Q110 270 200 268 Q290 270 290 330 L290 460 Z" class="fill-indigo-500 dark:fill-primary" stroke="black" stroke-width="4"/>
-                                <!-- Kepala -->
                                 <circle cx="200" cy="165" r="62" class="fill-[#ffcfa8]" stroke="black" stroke-width="4"/>
-                                <!-- Rambut depan / poni -->
                                 <path d="M138 150 Q140 96 200 92 Q260 96 262 150 Q230 118 200 118 Q170 118 138 150 Z" fill="#1f1f22" stroke="black" stroke-width="4"/>
                                 <!-- Mata (kedip) -->
                                 <g class="anim-blink">
@@ -137,17 +131,11 @@
                                     <rect x="220" y="162" width="10" height="14" rx="2" fill="black"/>
                                 </g>
 
-                                <!-- Senyum -->
                                 <path d="M180 195 Q200 210 220 195" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
-
-                                <!-- Pipi blush -->
                                 <circle cx="165" cy="185" r="8" class="fill-rose-300/70"/>
                                 <circle cx="235" cy="185" r="8" class="fill-rose-300/70"/>
 
-                                <!-- Lengan kiri pegang HP -->
                                 <path d="M150 340 Q90 330 85 260 Q83 230 110 225 Q130 222 135 250 Q138 290 175 310 Z" class="fill-indigo-500 dark:fill-primary" stroke="black" stroke-width="4"/>
-
-                                <!-- HP di tangan -->
                                 <g transform="rotate(-8 100 245)">
                                     <rect x="65" y="185" width="70" height="120" rx="4" class="fill-[#131316] dark:fill-surface" stroke="black" stroke-width="4"/>
                                     <rect x="73" y="196" width="54" height="86" rx="2" class="fill-emerald-400 dark:fill-secondary"/>
@@ -156,7 +144,6 @@
                                     <circle cx="100" cy="296" r="3" fill="black" opacity="0.6"/>
                                 </g>
 
-                                <!-- Lengan kanan (santai) -->
                                 <path d="M250 340 Q310 335 320 280 Q324 255 300 250 Q282 247 278 270 Q272 300 235 315 Z" class="fill-indigo-500 dark:fill-primary" stroke="black" stroke-width="4"/>
 
                                 <!-- Koin melayang (dekorasi) -->
@@ -173,7 +160,7 @@
                 </main>
 
                 <!-- Decorative cards -->
-                <div class="mt-24 grid w-full grid-cols-1 gap-5 sm:grid-cols-3">
+                <div class="mt-24 mb-24 grid w-full grid-cols-1 gap-5 sm:grid-cols-3">
                     <div class="anim-pop-in anim-wiggle rotate-[-3deg] border-2 border-black dark:border-outline-variant bg-emerald-300 dark:bg-secondary p-5 text-left shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#3f3f46] transition-transform hover:rotate-0" style="animation-delay: 0.5s">
                         <p class="font-sans text-xs font-bold uppercase tracking-wide text-black/60">Cuan Masuk</p>
                         <p class="mt-1 font-display text-2xl font-black text-black">+Rp 4.500.000</p>
@@ -190,13 +177,11 @@
                         <p class="mt-1 font-sans text-sm font-semibold text-black/70">Si Budi Belum Bayar</p>
                     </div>
                 </div>
-
-                <!-- Footer -->
-                <footer class="mt-24 border-t-2 border-black/10 dark:border-outline-variant pt-8 text-center font-sans text-sm font-semibold text-black/50 dark:text-on-surface-variant/60">
-                    © {{ date('Y') }} {{ strtoupper(config('app.name', 'Catatuang')) }}. Buat lo yang capek gatau duit lari ke mana.
-                </footer>
-
             </div>
-        </div>
-    </body>
+
+            <!-- Footer dipindah ke luar max-w-7xl -->
+             <footer class="relative z-10 w-full border-t-2 border-black/10 dark:border-outline-variant bg-[#f4f3ee] dark:bg-background px-6 py-8 text-center font-sans text-sm font-medium text-black/50 dark:text-on-surface-variant/60 transition-colors duration-300">
+                © {{ date('Y') }} {{ strtoupper(config('app.name', 'KapanRich')) }}. Buat lo yang capek gatau duit lari ke mana.
+            </footer>
+        </div> 
 </html>

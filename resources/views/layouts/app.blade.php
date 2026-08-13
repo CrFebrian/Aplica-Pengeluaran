@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Catatuang') }}</title>
+        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +47,6 @@
             </div>
         </header>
 
-        {{-- NEW: Sidebar drawer, dipicu tombol hamburger --}}
         <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-[70]">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="sidebarOpen = false"></div>
 
@@ -106,7 +106,6 @@
             {{ $slot }}
         </main>
 
-        {{-- CHANGED: FAB kontekstual — memicu modal berbeda tergantung halaman aktif --}}
         @if (request()->routeIs('debts.*'))
             <button @click="$dispatch('open-debt-form')" aria-label="Catat Hutang" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-warning text-on-warning flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#78350f] active:shadow-[2px_2px_0px_0px_#78350f] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>

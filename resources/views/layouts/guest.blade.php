@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Catatuang') }}</title>
+        <title>{{ config('app.name', 'KapanRich') }}</title>
+        <!-- Logo -->
+        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,11 +40,12 @@
 
                 <div class="w-full max-w-[420px] mx-auto relative z-10">
                     <div class="mb-xl text-center md:text-left">
+                        <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'KapanRich') }}" class="h-12 w-12 object-contain mx-auto md:mx-0 mb-sm"
+                             onerror="this.style.display='none';">
                         <h1 class="font-display text-display-lg-mobile md:text-display-lg text-on-background uppercase tracking-tighter">
-                            {{ config('app.name', 'Catatuang') }}
+                            {{ config('app.name', 'KapanRich') }}
                         </h1>
                     </div>
-
                     {{ $slot }}
                 </div>
             </div>
