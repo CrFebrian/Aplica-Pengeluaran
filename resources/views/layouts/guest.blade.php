@@ -6,8 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'KapanRich') }}</title>
-        <!-- Logo -->
-        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
+        <x-favicon />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,8 +39,9 @@
 
                 <div class="w-full max-w-[420px] mx-auto relative z-10">
                     <div class="mb-xl text-center md:text-left">
-                        <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'KapanRich') }}" class="h-12 w-12 object-contain mx-auto md:mx-0 mb-sm"
-                             onerror="this.style.display='none';">
+                        <a href="{{ url('/') }}" wire:navigate class="inline-block transition-transform hover:-translate-y-0.5 active:translate-y-0">
+                            <x-app-logo size="h-12 w-12" class="mx-auto md:mx-0 mb-sm" fallback-class="mx-auto md:mx-0 mb-sm text-xl" />
+                        </a>
                         <h1 class="font-display text-display-lg-mobile md:text-display-lg text-on-background uppercase tracking-tighter">
                             {{ config('app.name', 'KapanRich') }}
                         </h1>

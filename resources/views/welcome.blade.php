@@ -4,8 +4,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
-
         <script>
             (function () {
                 const stored = localStorage.getItem('theme');
@@ -15,6 +13,8 @@
         </script>
 
         <title>{{ config('app.name', 'KapanRich') }} — Duitmu, Kelakuanmu, Kelolamu</title>
+
+        <x-favicon />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,6 @@
             .anim-pop-in { animation: pop-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
             .anim-blink { animation: blink 4s ease-in-out infinite; transform-origin: center; }
         </style>
-
     </head>
     <body class="antialiased font-sans bg-[#f4f3ee] dark:bg-background text-black dark:text-on-background selection:bg-indigo-500 selection:text-white transition-colors duration-300" x-data>
         <div class="relative min-h-screen overflow-hidden">
@@ -54,22 +53,21 @@
             <div class="relative mx-auto max-w-7xl px-6 py-6">
 
                 <!-- Header -->
-                <header class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2 overflow-hidden">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo KapanRich" class="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10">
-
-                        <span class="hidden sm:block font-display text-lg sm:text-xl font-black tracking-tight truncate">
-                            {{ strtoupper(config('app.name', 'KapanRich')) }}
-                        </span>
+                <header class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <x-app-logo size="h-10 w-10" fallback-class="border-black dark:border-outline-variant text-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] bg-indigo-500" />
+                        <span class="font-display text-xl font-black tracking-tight">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
                     </div>
 
-                    <div class="flex items-center gap-1 sm:gap-3 shrink-0">
+                    <div class="flex items-center gap-3">
                         <button
                             @click="$store.theme.toggle()"
                             aria-label="Ganti tema"
-                            class="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center border-2 border-black dark:border-outline-variant bg-white dark:bg-surface-container shadow-[2px_2px_0px_0px_#000] sm:shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] transition-all hover:-translate-y-0.5 active:translate-y-0 active:shadow-[1px_1px_0px_0px_#000]">
-                            <span class="material-symbols-outlined text-base sm:text-lg" x-text="$store.theme.dark ? 'light_mode' : 'dark_mode'"></span>
+                            class="flex h-10 w-10 items-center justify-center border-2 border-black dark:border-outline-variant bg-white dark:bg-surface-container shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] transition-all hover:-translate-y-0.5 active:translate-y-0 active:shadow-[1px_1px_0px_0px_#000]"
+                        >
+                            <span class="material-symbols-outlined text-lg" x-text="$store.theme.dark ? 'light_mode' : 'dark_mode'"></span>
                         </button>
+
                         @if (Route::has('login'))
                             <livewire:welcome.navigation />
                         @endif
