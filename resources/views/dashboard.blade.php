@@ -16,10 +16,16 @@
 
 <x-app-layout>
 
-    <!-- Total Balance Card -->
-    <section class="bg-surface-container-low p-sm neo-shadow border-2 border-outline-variant flex flex-col justify-center items-center text-center gap-xs">
-        <h2 class="font-sans text-label-caps font-bold text-on-surface-variant">TOTAL SALDO</h2>
-        <div class="font-display text-headline-md text-on-surface">
+    {{-- Screen Header --}}
+    <div class="flex items-center justify-between">
+        <h2 class="font-display text-headline-md text-on-surface uppercase">Dashboard</h2>
+    </div>
+
+    <!-- Total Balance Card (hero) -->
+    <section class="bg-surface-container-low p-md border-2 border-outline-variant neo-shadow-primary relative overflow-hidden">
+        <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-on-surface opacity-[0.06] pointer-events-none" style="font-size: 160px; font-variation-settings: 'FILL' 1;">account_balance</span>
+        <h2 class="font-sans text-label-caps font-bold text-on-surface-variant uppercase relative">Total Saldo</h2>
+        <div class="font-display text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight relative mt-1">
             Rp {{ number_format($totalSaldo, 0, ',', '.') }}
         </div>
     </section>
@@ -27,11 +33,17 @@
     <!-- Income/Expense Today -->
     <section class="grid grid-cols-2 gap-sm">
         <div class="bg-income text-[#064e3b] p-sm border-2 border-outline-variant neo-shadow-success flex flex-col gap-xs">
-            <h3 class="font-sans text-label-caps font-bold opacity-90">PEMASUKAN HARI INI</h3>
+            <div class="flex items-center justify-between">
+                <h3 class="font-sans text-label-caps font-bold opacity-90">PEMASUKAN HARI INI</h3>
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">arrow_downward</span>
+            </div>
             <div class="font-display text-title-sm">+Rp {{ number_format($incomeToday, 0, ',', '.') }}</div>
         </div>
         <div class="bg-expense text-[#881337] p-sm border-2 border-outline-variant neo-shadow-danger flex flex-col gap-xs">
-            <h3 class="font-sans text-label-caps font-bold opacity-90">PENGELUARAN HARI INI</h3>
+            <div class="flex items-center justify-between">
+                <h3 class="font-sans text-label-caps font-bold opacity-90">PENGELUARAN HARI INI</h3>
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">arrow_upward</span>
+            </div>
             <div class="font-display text-title-sm">-Rp {{ number_format($expenseToday, 0, ',', '.') }}</div>
         </div>
     </section>
@@ -89,5 +101,4 @@
             @endforelse
         </div>
     </section>
-
 </x-app-layout>

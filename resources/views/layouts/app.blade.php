@@ -42,15 +42,11 @@
                 </a>
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
                    class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('categories.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
-                    <span class="material-symbols-outlined">settings</span> Categories
+                    <span class="material-symbols-outlined">settings</span> Categori
                 </a>
             </nav>
 
             <div class="mt-auto flex flex-col gap-1 p-sm border-t-2 border-outline-variant">
-                <a href="#"
-                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold text-on-surface hover:bg-surface-container-high transition-colors">
-                    <span class="material-symbols-outlined">help</span> Help
-                </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold text-tertiary hover:bg-surface-container-high transition-colors">
@@ -84,7 +80,6 @@
                     </h1>
                 </div>
                 <div class="flex items-center gap-3">
-                    {{-- NEW: Dark/Light mode toggle --}}
                     <x-theme-toggle size="h-8 w-8" flat />
 
                     <div class="relative" x-data="{ open: false }">
@@ -105,9 +100,7 @@
                         </div>
                     </div>
                 </div>
-                </div>
             </header>
-
             <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-[70] md:hidden">
                 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="sidebarOpen = false"></div>
 
@@ -158,19 +151,19 @@
                 </div>
             </div>
 
+            {{-- lebar konten menyesuaikan sisa ruang setelah sidebar, dengan batas maksimum --}}
             <!-- Page Heading -->
             @if (isset($header))
-                <div class="px-margin-mobile pt-md md:px-margin-desktop md:max-w-4xl">
+                <div class="px-margin-mobile pt-md md:px-margin-desktop max-w-screen-2xl mx-auto">
                     {{ $header }}
                 </div>
             @endif
 
             <!-- Main Content -->
-            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop md:max-w-4xl grid gap-md">
+            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
                 {{ $slot }}
             </main>
         </div>
-
         @if (request()->routeIs('debts.*'))
             <button @click="$dispatch('open-debt-form')" aria-label="Catat Hutang" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-warning text-on-warning flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#78350f] active:shadow-[2px_2px_0px_0px_#78350f] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
@@ -180,7 +173,8 @@
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
             </button>
         @endif
-        
+
+        <!-- BottomNavBar -->
         <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant md:hidden">
             <div class="flex justify-around items-center h-xl px-gutter bg-surface">
                 <a href="{{ route('dashboard') }}" wire:navigate
