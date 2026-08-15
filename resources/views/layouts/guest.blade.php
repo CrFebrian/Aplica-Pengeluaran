@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <x-theme-init />
         <title>{{ config('app.name', 'KapanRich') }}</title>
         <x-favicon />
 
@@ -17,12 +18,12 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-background text-on-background selection:bg-inverse-primary selection:text-surface">
+    <body class="font-sans antialiased bg-background text-on-background selection:bg-inverse-primary selection:text-surface" x-data>
         <div class="min-h-screen flex flex-col md:flex-row">
 
             <!-- Left Panel: Brand (hidden on mobile) -->
             <div class="hidden md:flex md:w-1/2 lg:w-3/5 bg-surface-container relative border-r-2 border-outline-variant overflow-hidden">
-                <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background-image: linear-gradient(#e4e1e6 1px, transparent 1px), linear-gradient(90deg, #e4e1e6 1px, transparent 1px); background-size: 32px 32px;"></div>
+                <div class="absolute inset-0 opacity-[0.06] pointer-events-none text-on-surface" style="background-image: linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px); background-size: 32px 32px;"></div>
                 <div class="relative z-10 p-xl flex flex-col justify-end w-full">
                     <div class="inline-flex bg-secondary-container text-on-secondary-container px-sm py-xs border-2 border-on-secondary-container neo-shadow w-max mb-md rotate-[-2deg]">
                         <span class="font-sans text-label-caps font-bold uppercase tracking-wide">Catatanmu, Kendalimu</span>
@@ -35,10 +36,13 @@
 
             <!-- Right Panel: Auth Form Canvas -->
             <div class="flex-1 flex flex-col justify-center px-margin-mobile py-lg md:px-margin-desktop bg-background relative">
-                <div class="absolute inset-0 opacity-[0.05] pointer-events-none" style="background-image: linear-gradient(#e4e1e6 1px, transparent 1px), linear-gradient(90deg, #e4e1e6 1px, transparent 1px); background-size: 32px 32px;"></div>
-
+                <div class="absolute inset-0 opacity-[0.05] pointer-events-none text-on-surface" style="background-image: linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px); background-size: 32px 32px;"></div>
+                <div class="absolute top-sm right-margin-mobile md:right-margin-desktop z-20">
+                    <x-theme-toggle size="h-10 w-10" />
+                </div>
                 <div class="w-full max-w-[420px] mx-auto relative z-10">
                     <div class="mb-xl text-center md:text-left">
+                        {{-- CHANGED: logo sekarang jadi link balik ke halaman welcome --}}
                         <a href="{{ url('/') }}" wire:navigate class="inline-block transition-transform hover:-translate-y-0.5 active:translate-y-0">
                             <x-app-logo size="h-12 w-12" class="mx-auto md:mx-0 mb-sm" fallback-class="mx-auto md:mx-0 mb-sm text-xl" />
                         </a>
@@ -46,6 +50,7 @@
                             {{ config('app.name', 'KapanRich') }}
                         </h1>
                     </div>
+
                     {{ $slot }}
                 </div>
             </div>

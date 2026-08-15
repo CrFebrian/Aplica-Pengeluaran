@@ -4,16 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script>
-            (function () {
-                const stored = localStorage.getItem('theme');
-                const isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (isDark) document.documentElement.classList.add('dark');
-            })();
-        </script>
-
+        <x-theme-init />
         <title>{{ config('app.name', 'KapanRich') }} — Duitmu, Kelakuanmu, Kelolamu</title>
-
         <x-favicon />
 
         <!-- Fonts -->
@@ -47,9 +39,11 @@
             .anim-blink { animation: blink 4s ease-in-out infinite; transform-origin: center; }
         </style>
     </head>
-    <body class="antialiased font-sans bg-[#f4f3ee] dark:bg-background text-black dark:text-on-background selection:bg-indigo-500 selection:text-white transition-colors duration-300" x-data>
+    <body class="antialiased font-sans bg-background text-on-background selection:bg-indigo-500 selection:text-white" x-data>
         <div class="relative min-h-screen overflow-hidden">
-            <div class="pointer-events-none absolute inset-0 opacity-[0.2] dark:opacity-[0.2] text-black dark:text-white transition-colors duration-300" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+            <!-- Grid dot background -->
+            <div class="pointer-events-none absolute inset-0 opacity-[0.2] dark:opacity-[0.06]" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px;"></div>
             <div class="relative mx-auto max-w-7xl px-6 py-6">
 
                 <!-- Header -->
@@ -60,14 +54,7 @@
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <button
-                            @click="$store.theme.toggle()"
-                            aria-label="Ganti tema"
-                            class="flex h-10 w-10 items-center justify-center border-2 border-black dark:border-outline-variant bg-white dark:bg-surface-container shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] transition-all hover:-translate-y-0.5 active:translate-y-0 active:shadow-[1px_1px_0px_0px_#000]"
-                        >
-                            <span class="material-symbols-outlined text-lg" x-text="$store.theme.dark ? 'light_mode' : 'dark_mode'"></span>
-                        </button>
-
+                        <x-theme-toggle />
                         @if (Route::has('login'))
                             <livewire:welcome.navigation />
                         @endif
@@ -77,9 +64,9 @@
                 <!-- Hero -->
                 <main class="mt-12 grid grid-cols-1 items-center gap-12 lg:mt-20 lg:grid-cols-2 lg:gap-8">
                     <div class="flex flex-col items-center text-center lg:items-start lg:text-left">
-
-                        <span class="anim-float inline-block rotate-[-2deg] border-2 border-black dark:border-outline-variant bg-amber-400 px-4 py-1.5 font-display text-sm font-bold shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46]">
-                            ✦ NO CAP, INI BENERAN GRATIS</span>
+                        <span class="anim-pop-in inline-block rotate-[-2deg] border-2 border-black dark:border-outline-variant bg-amber-400 px-4 py-1.5 font-display text-sm font-bold shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46]">
+                            ✦ NO CAP, INI BENERAN GRATIS
+                        </span>
 
                         <h1 class="anim-pop-in mt-6 max-w-xl font-display text-5xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-6xl" style="animation-delay: 0.1s">
                             Gajian Numpang<br>
@@ -92,7 +79,8 @@
                         </h1>
 
                         <p class="anim-pop-in mt-6 max-w-md font-sans text-lg font-medium text-black/70 dark:text-on-surface-variant" style="animation-delay: 0.2s">
-                            Catat uang masuk, war diskon, sampe utang temen yang belum balikin semua di satu tempat. Ga usah pake Excel jadul, cukup buka HP.
+                            Catat cuan masuk, war diskon, sampe utang temen yang belum balikin —
+                            semua di satu tempat. Ga usah pake Excel jadul, cukup buka HP.
                         </p>
 
                         <div class="anim-pop-in mt-8 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row lg:items-start" style="animation-delay: 0.3s">
@@ -109,6 +97,10 @@
                                 Udah Punya Akun
                             </a>
                         </div>
+
+                        <p class="anim-pop-in mt-5 font-sans text-sm font-semibold text-black/50 dark:text-on-surface-variant/70" style="animation-delay: 0.4s">
+                            Gratis selamanya. Ga perlu kartu kredit. Langsung cus.
+                        </p>
                     </div>
 
                     <!-- Right: Illustration -->

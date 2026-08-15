@@ -4,7 +4,7 @@
     <h2 class="font-display text-headline-md text-on-surface uppercase">Buku Hutang</h2>
 
     {{-- Summary Banner --}}
-    <div class="w-full bg-warning border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_#464554]">
+    <div class="w-full bg-warning border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">
         <div class="flex flex-col">
             <span class="font-sans text-label-caps font-bold text-on-warning">Total Hutang Aktif</span>
             <span class="font-display text-headline-md text-on-warning">
@@ -17,15 +17,15 @@
     {{-- Filter Row --}}
     <div class="flex gap-sm">
         <button wire:click="setFilter('active')"
-            class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'active' ? 'bg-warning text-on-warning shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'active' ? 'bg-warning text-on-warning shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             AKTIF
         </button>
         <button wire:click="setFilter('paid')"
-            class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'paid' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'paid' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             LUNAS
         </button>
         <button wire:click="setFilter('all')"
-            class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'all' ? 'bg-primary-container text-white shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'all' ? 'bg-primary-container text-white shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             SEMUA
         </button>
     </div>
@@ -38,7 +38,7 @@
                 $isDueToday = ! $debt->is_paid && $debt->due_date && $debt->due_date->isToday();
             @endphp
             <div wire:key="debt-{{ $debt->id }}"
-                class="relative bg-surface-container border-2 {{ $isOverdue ? 'border-tertiary' : 'border-outline-variant' }} p-sm shadow-[4px_4px_0px_0px_#464554] flex flex-col gap-sm">
+                class="relative bg-surface-container border-2 {{ $isOverdue ? 'border-tertiary' : 'border-outline-variant' }} p-sm shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex flex-col gap-sm">
 
                 <div class="flex justify-between items-start gap-sm">
                     <div class="flex flex-col">

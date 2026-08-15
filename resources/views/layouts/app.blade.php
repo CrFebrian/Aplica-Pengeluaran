@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'KapanRich') }}</title>
-
+        <x-theme-init />
         <x-favicon />
 
         <!-- Fonts -->
@@ -19,31 +19,30 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-body-md antialiased bg-background text-on-background min-h-screen md:flex" x-data="{ sidebarOpen: false }">
-
         <aside class="hidden md:flex md:w-64 md:shrink-0 md:flex-col md:h-screen md:sticky md:top-0 bg-surface-container border-r-2 border-outline-variant">
 
             <div class="flex items-center gap-2 p-md border-b-2 border-outline-variant">
-                {{-- NEW: logo terpusat via komponen x-app-logo --}}
                 <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
-                <span class="font-display text-title-sm text-primary truncate">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
+                <span class="font-display text-title-sm text-primary truncate flex-1">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
+                <x-theme-toggle size="h-8 w-8" />
             </div>
 
             <nav class="flex flex-col gap-1 p-sm">
                 <a href="{{ route('dashboard') }}" wire:navigate
-                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('dashboard') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_#3f3f46]' : 'text-on-surface hover:bg-surface-container-high' }}">
+                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('dashboard') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">dashboard</span> Dashboard
                 </a>
                 <a href="{{ Route::has('transactions.index') ? route('transactions.index') : '#' }}" wire:navigate
-                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('transactions.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_#3f3f46]' : 'text-on-surface hover:bg-surface-container-high' }}">
+                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('transactions.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">history</span> History
                 </a>
                 <a href="{{ Route::has('debts.index') ? route('debts.index') : '#' }}" wire:navigate
-                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('debts.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_#3f3f46]' : 'text-on-surface hover:bg-surface-container-high' }}">
+                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('debts.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">account_balance_wallet</span> Debts
                 </a>
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
-                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('categories.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_#3f3f46]' : 'text-on-surface hover:bg-surface-container-high' }}">
-                    <span class="material-symbols-outlined">settings</span> Settings
+                   class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('categories.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
+                    <span class="material-symbols-outlined">settings</span> Categories
                 </a>
             </nav>
 
@@ -71,7 +70,6 @@
                 </a>
             </div>
         </aside>
-
         <div class="flex-1 min-w-0 pb-32 md:pb-0">
 
             <!-- TopAppBar -->
@@ -85,22 +83,28 @@
                         {{ strtoupper(config('app.name', 'KapanRich')) }}
                     </h1>
                 </div>
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" aria-label="Account" class="text-primary active:translate-y-0.5 transition-transform">
-                        <span class="material-symbols-outlined">account_circle</span>
-                    </button>
-                    <div x-show="open" @click.outside="open = false" x-cloak
-                         class="absolute right-0 mt-xs w-48 bg-surface-container border-2 border-outline-variant neo-shadow z-50">
-                        <a href="{{ route('profile') }}" wire:navigate class="block px-sm py-xs font-sans text-body-md text-on-surface hover:bg-surface-container-high transition-colors">
-                            Profil
-                        </a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="w-full text-left px-sm py-xs font-sans text-body-md text-tertiary hover:bg-surface-container-high transition-colors">
-                                Keluar
-                            </button>
-                        </form>
+                <div class="flex items-center gap-3">
+                    {{-- NEW: Dark/Light mode toggle --}}
+                    <x-theme-toggle size="h-8 w-8" flat />
+
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" aria-label="Account" class="text-primary active:translate-y-0.5 transition-transform">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </button>
+                        <div x-show="open" @click.outside="open = false" x-cloak
+                             class="absolute right-0 mt-xs w-48 bg-surface-container border-2 border-outline-variant neo-shadow z-50">
+                            <a href="{{ route('profile') }}" wire:navigate class="block px-sm py-xs font-sans text-body-md text-on-surface hover:bg-surface-container-high transition-colors">
+                                Profil
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-sm py-xs font-sans text-body-md text-tertiary hover:bg-surface-container-high transition-colors">
+                                    Keluar
+                                </button>
+                            </form>
+                        </div>
                     </div>
+                </div>
                 </div>
             </header>
 
@@ -176,8 +180,7 @@
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
             </button>
         @endif
-
-        <!-- BottomNavBar (mobile only, sidebar desktop menggantikan peran ini di md+) -->
+        
         <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant md:hidden">
             <div class="flex justify-around items-center h-xl px-gutter bg-surface">
                 <a href="{{ route('dashboard') }}" wire:navigate

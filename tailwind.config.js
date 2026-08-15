@@ -16,23 +16,22 @@ export default {
     theme: {
     extend: {
       colors: {
-        // Base surfaces (Catatuang Dark Neubrutalism)
-        background: '#131316',
-        surface: '#131316',
-        'surface-dim': '#131316',
-        'surface-bright': '#39393c',
-        'surface-container-lowest': '#0e0e11',
-        'surface-container-low': '#1b1b1e',
-        'surface-container': '#1f1f22',
-        'surface-container-high': '#2a2a2d',
-        'surface-container-highest': '#353438',
-        'on-surface': '#e4e1e6',
-        'on-surface-variant': '#c7c4d7',
-        'on-background': '#e4e1e6',
-        outline: '#908fa0',
-        'outline-variant': '#464554',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        'surface-dim': 'rgb(var(--color-surface-dim) / <alpha-value>)',
+        'surface-bright': 'rgb(var(--color-surface-bright) / <alpha-value>)',
+        'surface-container-lowest': 'rgb(var(--color-surface-container-lowest) / <alpha-value>)',
+        'surface-container-low': 'rgb(var(--color-surface-container-low) / <alpha-value>)',
+        'surface-container': 'rgb(var(--color-surface-container) / <alpha-value>)',
+        'surface-container-high': 'rgb(var(--color-surface-container-high) / <alpha-value>)',
+        'surface-container-highest': 'rgb(var(--color-surface-container-highest) / <alpha-value>)',
+        'on-surface': 'rgb(var(--color-on-surface) / <alpha-value>)',
+        'on-surface-variant': 'rgb(var(--color-on-surface-variant) / <alpha-value>)',
+        'on-background': 'rgb(var(--color-on-background) / <alpha-value>)',
+        outline: 'rgb(var(--color-outline) / <alpha-value>)',
+        'outline-variant': 'rgb(var(--color-outline-variant) / <alpha-value>)',
 
-        // Primary (Indigo)
+        // Primary (Indigo) — brand color, konsisten di light & dark
         primary: '#6366f1',
         'primary-container': '#4f46e5',
         'on-primary': '#ffffff',
@@ -63,11 +62,11 @@ export default {
 
         // Legacy tokens kept for backward-compatibility with existing views
         main: '#6366f1',
-        border: '#52525b',
+        border: 'rgb(var(--color-outline-variant) / <alpha-value>)',
       },
       boxShadow: {
-        brutal: '6px 6px 0px 0px #3f3f46',
-        'brutal-sm': '2px 2px 0px 0px #3f3f46',
+        brutal: '6px 6px 0px 0px rgb(var(--color-shadow-ink))',
+        'brutal-sm': '2px 2px 0px 0px rgb(var(--color-shadow-ink))',
         'brutal-primary': '6px 6px 0px 0px #4f46e5',
         'brutal-success': '6px 6px 0px 0px #34d399',
         'brutal-danger': '6px 6px 0px 0px #fb7185',
