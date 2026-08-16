@@ -17,24 +17,20 @@
 
 <div class="flex flex-col gap-md">
 
-    {{-- Screen Header --}}
     <h2 class="font-display text-headline-md text-on-surface uppercase">Pengaturan Kategori</h2>
-
-    {{-- Add Category Button --}}
     <button wire:click="openCreateModal"
         class="w-full bg-primary text-white font-display text-title-sm py-3 border-2 border-outline-variant shadow-[6px_6px_0px_0px_#4f46e5] active:shadow-[2px_2px_0px_0px_#4f46e5] active:translate-x-[4px] active:translate-y-[4px] transition-all flex items-center justify-center gap-2">
         <span class="material-symbols-outlined">add</span>
         TAMBAH KATEGORI
     </button>
 
-    {{-- Type Tabs --}}
     <div class="grid grid-cols-2 gap-sm">
         <button wire:click="setActiveType('income')"
-            class="py-3 border-2 font-display text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
+            class="py-3 border-2 font-display text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PEMASUKAN
         </button>
         <button wire:click="setActiveType('expense')"
-            class="py-3 border-2 font-display text-title-sm transition-all {{ $activeType === 'expense' ? 'bg-tertiary text-on-tertiary border-outline-variant shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
+            class="py-3 border-2 font-display text-title-sm transition-all {{ $activeType === 'expense' ? 'bg-tertiary text-on-tertiary border-outline-variant shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PENGELUARAN
         </button>
     </div>
@@ -47,11 +43,10 @@
         </div>
     @endif
 
-    {{-- Category List --}}
     <div class="flex flex-col gap-sm">
         @forelse ($categories as $category)
             <div wire:key="cat-{{ $category->id }}"
-                class="bg-surface-container border-2 border-outline-variant p-sm shadow-[4px_4px_0px_0px_#464554] flex items-center justify-between gap-sm">
+                class="bg-surface-container border-2 border-outline-variant p-sm shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
                 <div class="flex items-center gap-sm min-w-0">
                     <div class="w-11 h-11 shrink-0 flex items-center justify-center border-2 border-outline-variant bg-surface">
                         <span class="material-symbols-outlined text-on-surface">{{ $iconFor($category->name) }}</span>
@@ -78,8 +73,7 @@
             </div>
         @endforelse
     </div>
-
-    {{-- Add/Edit Modal --}}
+    <!-- Modal ini muncul di atas konten utama -->
     @if ($showModal)
         <div class="fixed inset-0 z-[60] flex items-center justify-center p-4">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" wire:click="closeModal"></div>

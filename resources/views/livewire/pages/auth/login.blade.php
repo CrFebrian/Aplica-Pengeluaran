@@ -26,7 +26,7 @@ new #[Layout('layouts.guest')] class extends Component
 
 <div>
     <p class="font-sans text-body-md text-on-surface-variant mb-md">
-        Masukkan kredensial untuk mengakses akunmu.
+        Masukkan Email untuk mengakses akunmu.
     </p>
 
     <!-- Session Status -->
@@ -77,7 +77,7 @@ new #[Layout('layouts.guest')] class extends Component
 
     <div class="mt-md text-center md:text-left">
         <a class="font-sans text-body-md text-on-surface hover:text-primary transition-colors" href="{{ route('register') }}" wire:navigate>
-            Belum punya akun? <span class="font-display text-title-sm text-primary underline decoration-2 underline-offset-4">Daftar</span>
+            Belum punya akun?
         </a>
     </div>
 </div>

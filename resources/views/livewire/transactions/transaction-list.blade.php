@@ -1,49 +1,46 @@
 <div class="flex flex-col gap-md">
-
-    {{-- Screen Header --}}
     <div class="flex items-center justify-between">
         <h2 class="font-display text-headline-md text-on-surface uppercase">Daftar Transaksi</h2>
     </div>
 
-    {{-- Filter Row --}}
     <div class="flex gap-sm overflow-x-auto pb-2 -mx-margin-mobile px-margin-mobile snap-x">
         <button wire:click="setFilter('today')"
-            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'today' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'today' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             HARI INI
         </button>
         <button wire:click="setFilter('week')"
-            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'week' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'week' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             MINGGU INI
         </button>
         <button wire:click="setFilter('month')"
-            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'month' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'month' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             BULAN INI
         </button>
         <button wire:click="setFilter('all')"
-            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'all' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_#464554]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_#464554]' }}">
+            class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'all' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             SEMUA
         </button>
     </div>
 
-    {{-- Summary Banner --}}
-    <div class="w-full bg-primary-fixed border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_#464554]">
+    <!-- Banner -->
+    <div class="w-full bg-primary-fixed border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">
         <div class="flex flex-col">
-            <span class="font-sans text-label-caps font-bold text-on-primary-fixed">Total Periode Ini</span>
-            <span class="font-display text-headline-md text-on-primary-fixed">
+            <span class="font-sans text-label-caps font-bold text-gray-900">Total Periode Ini</span>
+            <span class="font-display text-headline-md text-gray-900">
                 {{ $totalPeriod >= 0 ? '+' : '-' }} Rp {{ number_format(abs($totalPeriod), 0, ',', '.') }}
             </span>
         </div>
-        <span class="material-symbols-outlined text-4xl text-on-primary-fixed opacity-50">monitoring</span>
+        <span class="material-symbols-outlined text-4xl text-gray-900 opacity-50">monitoring</span>
     </div>
 
-    {{-- Transaction List --}}
+    <!-- Transaction List -->
     <div class="flex flex-col gap-base">
         @forelse ($groupedTransactions as $date => $transactions)
             <h3 class="font-sans text-label-caps font-bold text-on-surface-variant mb-1 mt-2">{{ $date }}</h3>
 
             @foreach ($transactions as $transaction)
                 <div wire:key="tx-{{ $transaction->id }}"
-                    class="group relative flex items-center gap-sm p-sm bg-surface-container border-2 border-outline-variant shadow-[4px_4px_0px_0px_#464554] transition-all">
+                    class="group relative flex items-center gap-sm p-sm bg-surface-container border-2 border-outline-variant shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] transition-all">
                     <div class="w-12 h-12 flex items-center justify-center border-2 border-outline-variant shrink-0 {{ $transaction->type === 'income' ? 'bg-secondary' : 'bg-tertiary' }}">
                         <span class="material-symbols-outlined {{ $transaction->type === 'income' ? 'text-on-secondary' : 'text-on-tertiary' }} text-2xl">
                             {{ $transaction->type === 'income' ? 'payments' : 'shopping_bag' }}
@@ -70,5 +67,4 @@
             </div>
         @endforelse
     </div>
-
 </div>
