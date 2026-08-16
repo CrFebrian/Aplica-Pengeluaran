@@ -55,13 +55,13 @@
                 </form>
 
                 <a href="{{ route('profile') }}" wire:navigate
-                   class="mt-2 flex items-center gap-sm border-2 border-outline-variant bg-surface p-sm hover:bg-surface-container-high transition-colors">
-                    <div class="flex h-9 w-9 shrink-0 items-center justify-center border-2 border-outline-variant bg-primary-container font-display text-sm font-black text-white">
+                   class="mt-2 flex items-center gap-3 p-3 rounded-2xl bg-surface border border-outline-variant/50 hover:bg-surface-container-high hover:border-outline-variant transition-all duration-300 hover:shadow-sm">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-container font-display text-base font-black text-white shadow-sm">
                         {{ strtoupper(substr(auth()->user()->name ?? '?', 0, 1)) }}
                     </div>
                     <div class="min-w-0 flex flex-col">
                         <span class="font-sans text-body-md font-bold text-on-surface truncate">{{ auth()->user()->name }}</span>
-                        <span class="font-sans text-label-caps text-on-surface-variant truncate">{{ auth()->user()->email }}</span>
+                        <span class="font-sans text-label-caps text-on-surface-variant truncate opacity-80">{{ auth()->user()->email }}</span>
                     </div>
                 </a>
             </div>
@@ -151,19 +151,23 @@
                 </div>
             </div>
 
-            {{-- lebar konten menyesuaikan sisa ruang setelah sidebar, dengan batas maksimum --}}
-            <!-- Page Heading -->
-            @if (isset($header))
-                <div class="px-margin-mobile pt-md md:px-margin-desktop max-w-screen-2xl mx-auto">
-                    {{ $header }}
-                </div>
-            @endif
+            <!-- Page Heading & Main Content dengan Animasi Transisi -->
+            <div x-data="{ isNavigating: false }" 
+                 x-on:livewire:navigating.window="isNavigating = true" 
+                 x-on:livewire:navigated.window="isNavigating = false"
+                 :class="isNavigating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'"
+                 class="transition-all duration-300 ease-out">
+                 
+                @if (isset($header))
+                    <div class="px-margin-mobile pt-md md:px-margin-desktop max-w-screen-2xl mx-auto">
+                        {{ $header }}
+                    </div>
+                @endif
+                <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
+                    {{ $slot }}
+                </main>
+            </div>
 
-            <!-- Main Content -->
-            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
-                {{ $slot }}
-            </main>
-        </div>
         @if (request()->routeIs('debts.*'))
             <button @click="$dispatch('open-debt-form')" aria-label="Catat Hutang" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-warning text-on-warning flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#78350f] active:shadow-[2px_2px_0px_0px_#78350f] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
@@ -195,7 +199,7 @@
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
                    class="flex flex-col items-center justify-center {{ request()->routeIs('categories.*') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
                     <span class="material-symbols-outlined">settings</span>
-                    <span class="font-sans text-label-caps mt-1">Settings</span>
+                    <span class="font-sans text-label-caps mt-1">Categori</span>
                 </a>
             </div>
         </nav>

@@ -42,7 +42,6 @@
                 </div>
                 <div class="w-full max-w-[420px] mx-auto relative z-10">
                     <div class="mb-xl text-center md:text-left">
-                        {{-- CHANGED: logo sekarang jadi link balik ke halaman welcome --}}
                         <a href="{{ url('/') }}" wire:navigate class="inline-block transition-transform hover:-translate-y-0.5 active:translate-y-0">
                             <x-app-logo size="h-12 w-12" class="mx-auto md:mx-0 mb-sm" fallback-class="mx-auto md:mx-0 mb-sm text-xl" />
                         </a>

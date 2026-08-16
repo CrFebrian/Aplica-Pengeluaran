@@ -1,9 +1,5 @@
-<div class="flex flex-col gap-md">
-
-    {{-- Screen Header --}}
+<div class="flex flex-col gap-md" x-data="{ confirmingPaidId: null, confirmingPaidName: null }">
     <h2 class="font-display text-headline-md text-on-surface uppercase">Buku Hutang</h2>
-
-    {{-- Summary Banner --}}
     <div class="w-full bg-warning border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">
         <div class="flex flex-col">
             <span class="font-sans text-label-caps font-bold text-on-warning">Total Hutang Aktif</span>
@@ -14,7 +10,6 @@
         <span class="material-symbols-outlined text-4xl text-on-warning opacity-50">account_balance_wallet</span>
     </div>
 
-    {{-- Filter Row --}}
     <div class="flex gap-sm">
         <button wire:click="setFilter('active')"
             class="flex-1 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'active' ? 'bg-warning text-on-warning shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
@@ -30,7 +25,6 @@
         </button>
     </div>
 
-    {{-- Debt List --}}
     <div class="flex flex-col gap-sm">
         @forelse ($debts as $debt)
             @php
@@ -76,7 +70,8 @@
                     </div>
 
                     @unless ($debt->is_paid)
-                        <button wire:click="markAsPaid({{ $debt->id }})" wire:confirm="Tandai hutang ini sebagai lunas?"
+                        <button type="button"
+                            x-on:click="confirmingPaidId = {{ $debt->id }}; confirmingPaidName = '{{ addslashes($debt->creditor_name) }}'"
                             class="px-4 py-2 bg-primary text-white border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#4f46e5] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#4f46e5] transition-all">
                             TANDAI LUNAS
                         </button>
@@ -97,4 +92,52 @@
     </div>
 
     <livewire:debts.debt-form />
+    <!-- Modal Konfirmasi Tandai Lunas -->
+    <div x-show="confirmingPaidId !== null"
+        x-cloak
+        x-on:keydown.escape.window="confirmingPaidId = null"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style="display: none;">
+
+        <div x-show="confirmingPaidId !== null"
+            x-on:click="confirmingPaidId = null"
+            x-transition:enter="ease-out duration-150"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in duration-100"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="absolute inset-0 bg-black/50"></div>
+
+        <div x-show="confirmingPaidId !== null"
+            x-transition:enter="ease-out duration-150"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="ease-in duration-100"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            class="relative w-full max-w-sm bg-surface-container border-2 border-outline-variant shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))] p-md flex flex-col gap-sm">
+
+            <div class="flex items-center gap-xs">
+                <span class="material-symbols-outlined text-primary">task_alt</span>
+                <h3 class="font-display text-title-sm text-on-surface">TANDAI LUNAS</h3>
+            </div>
+
+            <p class="font-sans text-body-md text-on-surface-variant">
+                Tandai hutang <span class="font-bold text-on-surface" x-text="confirmingPaidName"></span> ini sebagai lunas?
+            </p>
+
+            <div class="flex gap-sm mt-xs">
+                <button type="button" x-on:click="confirmingPaidId = null"
+                    class="flex-1 px-4 py-2 bg-surface-container-low text-on-surface border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgb(var(--color-shadow-ink))] transition-all">
+                    BATAL
+                </button>
+                <button type="button"
+                    x-on:click="$wire.markAsPaid(confirmingPaidId); confirmingPaidId = null"
+                    class="flex-1 px-4 py-2 bg-primary text-white border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#4f46e5] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#4f46e5] transition-all">
+                    YA, LUNAS
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
