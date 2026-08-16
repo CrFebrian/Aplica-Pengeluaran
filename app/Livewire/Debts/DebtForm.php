@@ -18,14 +18,13 @@ class DebtForm extends Component
     protected function rules(): array
     {
         return [
-            'creditor_name' => 'required|string|max:255',
+            'creditor_name' => 'required|string|max:50',
             'amount' => 'required|numeric|min:1',
             'due_date' => 'nullable|date',
             'note' => 'nullable|string|max:1000',
         ];
     }
 
-    // event ini akan membuka modal form tambah hutang
     #[On('open-debt-form')]
     public function openModal(): void
     {
@@ -53,8 +52,6 @@ class DebtForm extends Component
 
         $this->resetForm();
         $this->showModal = false;
-
-        // trigger event agar DebtList bisa refresh otomatis
         $this->dispatch('debt-saved');
     }
 

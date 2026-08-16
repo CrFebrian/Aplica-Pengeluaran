@@ -11,7 +11,7 @@ class CategoryFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => fake()->words(2, true),
+            'name' => \Illuminate\Support\Str::limit(fake()->words(2, true), 50, ''),
             'type' => fake()->randomElement(['income', 'expense']),
         ];
     }

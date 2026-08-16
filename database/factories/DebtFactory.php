@@ -13,7 +13,7 @@ class DebtFactory extends Factory
 
         return [
             'user_id' => User::factory(),
-            'creditor_name' => fake()->name(),
+            'creditor_name' => \Illuminate\Support\Str::limit(fake()->name(), 50, ''),
             'amount' => fake()->numberBetween(50000, 5000000),
             'due_date' => fake()->dateTimeBetween('now', '+3 months'),
             'is_paid' => $isPaid,

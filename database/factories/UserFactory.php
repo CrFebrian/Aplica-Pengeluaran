@@ -25,7 +25,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            // CHANGED: dibatasi eksplisit ke 50 karakter, sinkron dengan skema kolom users.name
+            'name' => Str::limit(fake()->name(), 50, ''),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

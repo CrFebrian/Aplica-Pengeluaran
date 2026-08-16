@@ -42,7 +42,7 @@
                 </a>
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
                    class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('categories.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
-                    <span class="material-symbols-outlined">settings</span> Categori
+                    <span class="material-symbols-outlined">settings</span> Catergori
                 </a>
             </nav>
 
@@ -55,10 +55,12 @@
                 </form>
 
                 <a href="{{ route('profile') }}" wire:navigate
-                   class="mt-2 flex items-center gap-3 p-3 rounded-2xl bg-surface border border-outline-variant/50 hover:bg-surface-container-high hover:border-outline-variant transition-all duration-300 hover:shadow-sm">
+                class="mt-2 flex items-center gap-3 p-3 rounded-2xl bg-surface border border-outline-variant/50 hover:bg-surface-container-high hover:border-outline-variant transition-all duration-300 hover:shadow-sm">
+                    <!-- Ikon Inisial (Bulat) -->
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-container font-display text-base font-black text-white shadow-sm">
                         {{ strtoupper(substr(auth()->user()->name ?? '?', 0, 1)) }}
                     </div>
+                    <!-- Teks Nama & Email -->
                     <div class="min-w-0 flex flex-col">
                         <span class="font-sans text-body-md font-bold text-on-surface truncate">{{ auth()->user()->name }}</span>
                         <span class="font-sans text-label-caps text-on-surface-variant truncate opacity-80">{{ auth()->user()->email }}</span>
@@ -66,8 +68,8 @@
                 </a>
             </div>
         </aside>
-        <div class="flex-1 min-w-0 pb-32 md:pb-0">
 
+        <div class="flex-1 min-w-0 min-h-screen pb-32 md:pb-0">
             <!-- TopAppBar -->
             <header class="w-full top-0 sticky z-40 bg-background flex items-center justify-between px-margin-mobile py-sm border-b-2 border-outline-variant md:hidden">
                 <button @click="sidebarOpen = true" aria-label="Menu" class="text-primary active:translate-y-0.5 transition-transform">
@@ -101,9 +103,9 @@
                     </div>
                 </div>
             </header>
+
             <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-[70] md:hidden">
                 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="sidebarOpen = false"></div>
-
                 <div x-show="sidebarOpen"
                      x-transition:enter="transition ease-out duration-200"
                      x-transition:enter-start="-translate-x-full"
@@ -138,7 +140,7 @@
                         </a>
                         <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate @click="sidebarOpen = false"
                            class="flex items-center gap-sm px-sm py-sm font-sans text-body-md {{ request()->routeIs('categories.*') ? 'bg-primary-container text-white' : 'text-on-surface hover:bg-surface-container-high' }} transition-colors">
-                            <span class="material-symbols-outlined">settings</span> Kategori
+                            <span class="material-symbols-outlined">settings</span> Catergori
                         </a>
                     </nav>
 
@@ -151,22 +153,17 @@
                 </div>
             </div>
 
-            <!-- Page Heading & Main Content dengan Animasi Transisi -->
-            <div x-data="{ isNavigating: false }" 
-                 x-on:livewire:navigating.window="isNavigating = true" 
-                 x-on:livewire:navigated.window="isNavigating = false"
-                 :class="isNavigating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'"
-                 class="transition-all duration-300 ease-out">
-                 
-                @if (isset($header))
-                    <div class="px-margin-mobile pt-md md:px-margin-desktop max-w-screen-2xl mx-auto">
-                        {{ $header }}
-                    </div>
-                @endif
-                <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
-                    {{ $slot }}
-                </main>
-            </div>
+            <!-- Page Heading -->
+            @if (isset($header))
+                <div class="px-margin-mobile pt-md md:px-margin-desktop max-w-screen-2xl mx-auto">
+                    {{ $header }}
+                </div>
+            @endif
+            <!-- Main Content -->
+            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
+                {{ $slot }}
+            </main>
+        </div>
 
         @if (request()->routeIs('debts.*'))
             <button @click="$dispatch('open-debt-form')" aria-label="Catat Hutang" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-warning text-on-warning flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#78350f] active:shadow-[2px_2px_0px_0px_#78350f] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
@@ -199,7 +196,7 @@
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
                    class="flex flex-col items-center justify-center {{ request()->routeIs('categories.*') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
                     <span class="material-symbols-outlined">settings</span>
-                    <span class="font-sans text-label-caps mt-1">Categori</span>
+                    <span class="font-sans text-label-caps mt-1">Catergori</span>
                 </a>
             </div>
         </nav>
