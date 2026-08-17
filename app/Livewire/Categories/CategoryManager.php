@@ -9,18 +9,19 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class CategoryManager extends Component
 {
+    // tab aktif — income | expense
     public string $activeType = 'expense';
 
-    // state form (dipakai untuk tambah maupun edit, dibedakan lewat $editingId)
     public bool $showModal = false;
     public ?int $editingId = null;
     public string $name = '';
+
     public ?string $deleteError = null;
 
     protected function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:50',
         ];
     }
 
@@ -70,7 +71,6 @@ class CategoryManager extends Component
         $this->showModal = false;
     }
 
-    // cegah hapus kategori yang masih dipakai transaksi
     // akan ikut menghapus semua transaksi terkait jika dipaksa hapus.
     public function delete(int $categoryId): void
     {

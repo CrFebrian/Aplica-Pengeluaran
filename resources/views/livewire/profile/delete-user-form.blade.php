@@ -23,55 +23,61 @@ new class extends Component
     }
 }; ?>
 
-<section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Delete Account') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
-        </p>
+<section class="flex flex-col gap-sm">
+    <header class="flex items-center gap-xs">
+        <span class="material-symbols-outlined text-tertiary">warning</span>
+        <h3 class="font-display text-title-sm text-tertiary">
+            {{ __('Hapus Akun') }}
+        </h3>
     </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    <p class="font-sans text-body-md text-on-surface-variant">
+        {{ __('Setelah akunmu dihapus, semua data transaksi, kategori, catatan hutang akan dihapus permanen. Unduh atau catat data yang ingin kamu simpan sebelum melanjutkan.') }}
+    </p>
+
+    <div>
+        <x-danger-button
+            x-data=""
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+        >{{ __('Hapus Akun') }}</x-danger-button>
+    </div>
 
     <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
-        <form wire:submit="deleteUser" class="p-6">
+        <form wire:submit="deleteUser" class="flex flex-col">
 
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
-
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-            </p>
-
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
-                    wire:model="password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
-
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <div class="p-md border-b-2 border-outline-variant bg-surface-container flex items-center gap-xs">
+                <span class="material-symbols-outlined text-tertiary">warning</span>
+                <h2 class="font-display text-title-sm text-on-surface">
+                    {{ __('Yakin Ingin Menghapus Akun?') }}
+                </h2>
             </div>
 
-            <div class="mt-6 flex justify-end">
+            <div class="p-md flex flex-col gap-md">
+                <p class="font-sans text-body-md text-on-surface-variant">
+                    {{ __('Tindakan ini tidak bisa dibatalkan. Semua data akan dihapus permanen. Masukkan password untuk konfirmasi.') }}
+                </p>
+
+                <div class="flex flex-col gap-xs">
+                    <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+                    <x-text-input
+                        wire:model="password"
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="{{ __('Password') }}"
+                    />
+
+                    <x-input-error :messages="$errors->get('password')" />
+                </div>
+            </div>
+
+            <div class="p-md border-t-2 border-outline-variant bg-surface-container flex justify-end gap-sm">
                 <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
+                    {{ __('Batal') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
+                <x-danger-button>
+                    {{ __('Hapus Akun') }}
                 </x-danger-button>
             </div>
         </form>

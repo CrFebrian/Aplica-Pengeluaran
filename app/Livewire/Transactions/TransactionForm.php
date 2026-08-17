@@ -9,10 +9,8 @@ use Livewire\Component;
 
 class TransactionForm extends Component
 {
-    // modal open/close state, dikontrol lewat event dari FAB (app.blade.php)
     public bool $showModal = false;
 
-    // form fields sesuai skema tabel transactions
     public string $type = 'expense';
     public string $title = '';
     public string $amount = '';
@@ -29,7 +27,7 @@ class TransactionForm extends Component
     {
         return [
             'type' => 'required|in:income,expense',
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:50',
             'amount' => 'required|numeric|min:1',
             'category_id' => 'required|exists:categories,id',
             'transaction_date' => 'required|date',
@@ -37,7 +35,6 @@ class TransactionForm extends Component
         ];
     }
 
-    // kategori difilter sesuai tab type yang aktif (income/expense)
     public function getCategoriesProperty()
     {
         return Category::where('user_id', auth()->id())
@@ -58,7 +55,6 @@ class TransactionForm extends Component
         $this->showModal = false;
     }
 
-    // reset kategori terpilih saat tab type berganti
     public function updatedType(): void
     {
         $this->category_id = null;
@@ -82,7 +78,7 @@ class TransactionForm extends Component
         $this->showModal = false;
         $this->dispatch('transaction-saved');
 
-        // angka totalnya ikut update.
+        // jika bukan dari halaman transactions, redirect ke halaman sebelumnya (misal dari dashboard)
         if (! request()->routeIs('transactions.*')) {
             $this->redirect(url()->previous(), navigate: false);
         }

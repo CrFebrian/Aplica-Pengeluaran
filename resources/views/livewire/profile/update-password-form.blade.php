@@ -38,41 +38,43 @@ new class extends Component
     }
 }; ?>
 
-<section>
+<section class="flex flex-col gap-sm">
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
-        </h2>
+        <h3 class="font-display text-title-sm text-on-surface">
+            {{ __('Ubah Password') }}
+        </h3>
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        <p class="font-sans text-body-md text-on-surface-variant mt-1">
+            {{ __('Gunakan password yang panjang dan acak supaya akunmu tetap aman.') }}
         </p>
     </header>
 
-    <form wire:submit="updatePassword" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
+    <form wire:submit="updatePassword" class="flex flex-col gap-md">
+        <div class="flex flex-col gap-xs">
+            <x-input-label for="update_password_current_password" :value="__('Password Saat Ini')" />
+            <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('current_password')" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input wire:model="password" id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="flex flex-col gap-xs">
+            <x-input-label for="update_password_password" :value="__('Password Baru')" />
+            <x-text-input wire:model="password" id="update_password_password" name="password" type="password" autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="flex flex-col gap-xs">
+            <x-input-label for="update_password_password_confirmation" :value="__('Konfirmasi Password')" />
+            <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password_confirmation')" />
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex items-center gap-sm">
+            <button type="submit" class="px-6 py-2 bg-primary text-white border-2 border-black font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#000000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#000000] transition-all uppercase">
+                {{ __('Simpan') }}
+            </button>
 
-            <x-action-message class="me-3" on="password-updated">
-                {{ __('Saved.') }}
+            <x-action-message on="password-updated">
+                {{ __('Tersimpan.') }}
             </x-action-message>
         </div>
     </form>

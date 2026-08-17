@@ -22,7 +22,7 @@
         </button>
     </div>
 
-    <!-- Banner -->
+    <!-- Banner Total Periode Ini -->
     <div class="w-full bg-primary-fixed border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">
         <div class="flex flex-col">
             <span class="font-sans text-label-caps font-bold text-gray-900">Total Periode Ini</span>

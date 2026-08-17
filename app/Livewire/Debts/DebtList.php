@@ -10,8 +10,8 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class DebtList extends Component
 {
-    // Filter status hutang yang ditampilkan di list. Default: active (belum dibayar)
     public string $filter = 'active';
+    public ?int $confirmingDebtId = null;
 
     #[On('debt-saved')]
     public function refreshList(): void
@@ -24,14 +24,30 @@ class DebtList extends Component
         $this->filter = $filter;
     }
 
-    public function markAsPaid(int $debtId): void
+    public function confirmMarkAsPaid(int $debtId): void
     {
-        $debt = Debt::where('user_id', auth()->id())->findOrFail($debtId);
+        $this->confirmingDebtId = $debtId;
+    }
+
+    public function cancelMarkAsPaid(): void
+    {
+        $this->confirmingDebtId = null;
+    }
+
+    public function markAsPaid(): void
+    {
+        if (! $this->confirmingDebtId) {
+            return;
+        }
+
+        $debt = Debt::where('user_id', auth()->id())->findOrFail($this->confirmingDebtId);
 
         $debt->update([
             'is_paid' => true,
             'paid_at' => now()->toDateString(),
         ]);
+
+        $this->confirmingDebtId = null;
     }
 
     public function render()
@@ -48,9 +64,15 @@ class DebtList extends Component
 
         $totalActiveDebt = Debt::where('user_id', auth()->id())->where('is_paid', false)->sum('amount');
 
+        // data hutang yang sedang dikonfirmasi, dipakai untuk tampilkan nama & nominal di modal
+        $confirmingDebt = $this->confirmingDebtId
+            ? Debt::where('user_id', auth()->id())->find($this->confirmingDebtId)
+            : null;
+
         return view('livewire.debts.debt-list', [
             'debts' => $debts,
             'totalActiveDebt' => $totalActiveDebt,
+            'confirmingDebt' => $confirmingDebt,
         ]);
     }
 }
