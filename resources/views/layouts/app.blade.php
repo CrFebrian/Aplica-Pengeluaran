@@ -42,7 +42,7 @@
                 </a>
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
                    class="flex items-center gap-sm px-sm py-sm font-sans text-body-md font-semibold transition-colors {{ request()->routeIs('categories.*') ? 'bg-primary text-white border-2 border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))]' : 'text-on-surface hover:bg-surface-container-high' }}">
-                    <span class="material-symbols-outlined">settings</span> Catergori
+                    <span class="material-symbols-outlined">settings</span> Categori
                 </a>
             </nav>
 
@@ -140,7 +140,7 @@
                         </a>
                         <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate @click="sidebarOpen = false"
                            class="flex items-center gap-sm px-sm py-sm font-sans text-body-md {{ request()->routeIs('categories.*') ? 'bg-primary-container text-white' : 'text-on-surface hover:bg-surface-container-high' }} transition-colors">
-                            <span class="material-symbols-outlined">settings</span> Catergori
+                            <span class="material-symbols-outlined">settings</span> Categori
                         </a>
                     </nav>
 
@@ -196,7 +196,7 @@
                 <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
                    class="flex flex-col items-center justify-center {{ request()->routeIs('categories.*') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
                     <span class="material-symbols-outlined">settings</span>
-                    <span class="font-sans text-label-caps mt-1">Catergori</span>
+                    <span class="font-sans text-label-caps mt-1">Categori</span>
                 </a>
             </div>
         </nav>

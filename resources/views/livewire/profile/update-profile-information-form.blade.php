@@ -28,7 +28,7 @@ new class extends Component
         $user = Auth::user();
 
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
         ]);
 
@@ -62,53 +62,53 @@ new class extends Component
     }
 }; ?>
 
-<section>
+<section class="flex flex-col gap-sm">
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Profile Information') }}
-        </h2>
+        <h3 class="font-display text-title-sm text-on-surface">
+            {{ __('Informasi Profil') }}
+        </h3>
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information and email address.") }}
+        <p class="font-sans text-body-md text-on-surface-variant mt-1">
+            {{ __('Perbarui nama dan alamat email akunmu.') }}
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+    <form wire:submit="updateProfileInformation" class="flex flex-col gap-md">
+        <div class="flex flex-col gap-xs">
+            <x-input-label for="name" :value="__('Nama')" />
+            <x-text-input wire:model="name" id="name" name="name" type="text" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" />
         </div>
 
-        <div>
+        <div class="flex flex-col gap-xs">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-text-input wire:model="email" id="email" name="email" type="email" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" />
 
             @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
+                <div class="bg-warning/10 border-2 border-warning p-sm flex flex-col gap-1">
+                    <p class="font-sans text-body-md text-on-surface">
+                        {{ __('Alamat emailmu belum diverifikasi.') }}
 
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
+                        <button wire:click.prevent="sendVerification" class="font-bold text-primary hover:underline">
+                            {{ __('Klik di sini untuk kirim ulang email verifikasi.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
+                        <p class="font-sans text-body-md font-bold text-secondary">
+                            {{ __('Link verifikasi baru sudah dikirim ke emailmu.') }}
                         </p>
                     @endif
                 </div>
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex items-center gap-sm">
+            <x-primary-button>{{ __('Simpan') }}</x-primary-button>
 
-            <x-action-message class="me-3" on="profile-updated">
-                {{ __('Saved.') }}
+            <x-action-message on="profile-updated">
+                {{ __('Tersimpan.') }}
             </x-action-message>
         </div>
     </form>
