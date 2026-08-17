@@ -71,7 +71,8 @@
                     </div>
 
                     @unless ($debt->is_paid)
-                        <button wire:click="markAsPaid({{ $debt->id }})" wire:confirm="Tandai hutang ini sebagai lunas?"
+                        <button type="button"
+                            wire:click="confirmMarkAsPaid({{ $debt->id }})"
                             class="px-4 py-2 bg-primary text-white border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#4f46e5] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#4f46e5] transition-all">
                             TANDAI LUNAS
                         </button>
@@ -92,4 +93,37 @@
     </div>
 
     <livewire:debts.debt-form />
+
+    <!-- Modal Konfirmasi Tandai Lunas -->
+    @if ($confirmingDebt)
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+
+            <div wire:click="cancelMarkAsPaid" class="absolute inset-0 bg-black/50"></div>
+
+            <div class="relative w-full max-w-sm bg-surface-container border-2 border-outline-variant shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))] p-md flex flex-col gap-sm">
+
+                <div class="flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-primary">task_alt</span>
+                    <h3 class="font-display text-title-sm text-on-surface">TANDAI LUNAS</h3>
+                </div>
+
+                <p class="font-sans text-body-md text-on-surface-variant">
+                    Tandai hutang <span class="font-bold text-on-surface">{{ $confirmingDebt->creditor_name }}</span>
+                    sebesar <span class="font-bold text-on-surface">Rp {{ number_format($confirmingDebt->amount, 0, ',', '.') }}</span>
+                    ini sebagai lunas?
+                </p>
+
+                <div class="flex gap-sm mt-xs">
+                    <button type="button" wire:click="cancelMarkAsPaid"
+                        class="flex-1 px-4 py-2 bg-surface-container-low text-on-surface border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgb(var(--color-shadow-ink))] transition-all">
+                        BATAL
+                    </button>
+                    <button type="button" wire:click="markAsPaid"
+                        class="flex-1 px-4 py-2 bg-primary text-white border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#4f46e5] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#4f46e5] transition-all">
+                        YA, LUNAS
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

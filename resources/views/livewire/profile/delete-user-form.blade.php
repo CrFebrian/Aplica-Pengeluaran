@@ -32,7 +32,7 @@ new class extends Component
     </header>
 
     <p class="font-sans text-body-md text-on-surface-variant">
-        {{ __('Setelah akunmu dihapus, semua data — transaksi, kategori, catatan hutang — akan dihapus permanen. Unduh atau catat data yang ingin kamu simpan sebelum melanjutkan.') }}
+        {{ __('Setelah akunmu dihapus, semua data transaksi, kategori, catatan hutang akan dihapus permanen. Unduh atau catat data yang ingin kamu simpan sebelum melanjutkan.') }}
     </p>
 
     <div>

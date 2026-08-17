@@ -69,7 +69,9 @@ new class extends Component
         </div>
 
         <div class="flex items-center gap-sm">
-            <x-primary-button>{{ __('Simpan') }}</x-primary-button>
+            <button type="submit" class="px-6 py-2 bg-primary text-white border-2 border-black font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#000000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#000000] transition-all uppercase">
+                {{ __('Simpan') }}
+            </button>
 
             <x-action-message on="password-updated">
                 {{ __('Tersimpan.') }}
