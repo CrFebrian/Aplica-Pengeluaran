@@ -3,7 +3,7 @@
         <h2 class="font-display text-headline-md text-on-surface uppercase">Daftar Transaksi</h2>
     </div>
 
-    <div class="flex gap-sm overflow-x-auto pb-2 -mx-margin-mobile px-margin-mobile snap-x">
+    <div class="grid grid-cols-2 gap-sm sm:flex sm:flex-wrap">
         <button wire:click="setFilter('today')"
             class="snap-start shrink-0 px-4 py-2 border-2 border-outline-variant font-sans text-label-caps font-bold transition-all {{ $filter === 'today' ? 'bg-secondary-container text-on-secondary-container shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface hover:bg-surface-container-high shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' }}">
             HARI INI

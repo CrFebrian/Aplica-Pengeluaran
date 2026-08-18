@@ -42,17 +42,17 @@
     <body class="antialiased font-sans bg-background text-on-background selection:bg-indigo-500 selection:text-white" x-data>
         <div class="relative min-h-screen overflow-hidden">
             <div class="pointer-events-none absolute inset-0 opacity-[0.2] dark:opacity-[0.2] text-black dark:text-white transition-colors duration-300" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px;"></div>
-            <div class="relative mx-auto max-w-7xl px-6 py-6">
+            <div class="relative mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
 
                 <!-- Header -->
-                <header class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <x-app-logo size="h-10 w-10" fallback-class="border-black dark:border-outline-variant text-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] bg-indigo-500" />
-                        <span class="font-display text-xl font-black tracking-tight">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
+                <header class="flex items-center justify-between gap-2">
+                    <div class="flex min-w-0 items-center gap-1.5 sm:gap-2">
+                        <x-app-logo size="h-8 w-8 sm:h-10 sm:w-10" fallback-class="border-black dark:border-outline-variant text-base sm:text-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] bg-indigo-500" />
+                        <span class="truncate font-display text-sm font-black tracking-tight sm:text-xl">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <x-theme-toggle />
+                    <div class="flex shrink-0 items-center gap-1.5 sm:gap-3">
+                        <x-theme-toggle size="h-8 w-8 sm:h-10 sm:w-10" />
                         @if (Route::has('login'))
                             <livewire:welcome.navigation />
                         @endif

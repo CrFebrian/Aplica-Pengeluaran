@@ -12,5 +12,5 @@
     aria-label="Ganti tema terang/gelap"
     {{ $attributes->merge(['class' => "$base $style"]) }}
 >
-    <span class="material-symbols-outlined text-lg" x-text="$store.theme.dark ? 'light_mode' : 'dark_mode'"></span>
+    <span class="material-symbols-outlined text-base sm:text-lg" x-text="$store.theme.dark ? 'light_mode' : 'dark_mode'"></span>
 </button>

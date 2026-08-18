@@ -69,15 +69,15 @@
             </div>
         </aside>
 
-        <div class="flex-1 min-w-0 min-h-screen pb-32 md:pb-0">
+        <div class="flex-1 min-w-0 min-h-screen overflow-x-hidden pb-32 md:pb-0">
             <!-- TopAppBar -->
             <header class="w-full top-0 sticky z-40 bg-background flex items-center justify-between px-margin-mobile py-sm border-b-2 border-outline-variant md:hidden">
-                <button @click="sidebarOpen = true" aria-label="Menu" class="text-primary active:translate-y-0.5 transition-transform">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
                 <div class="flex items-center gap-2">
-                    <x-app-logo size="h-6 w-6" fallback-class="text-xs" />
-                    <h1 class="font-display text-display-lg-mobile tracking-tighter text-primary">
+                    <button @click="sidebarOpen = true" aria-label="Menu" class="text-on-background active:translate-y-0.5 transition-transform">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
+                    <h1 class="font-display text-xl font-bold tracking-tighter text-on-background">
                         {{ strtoupper(config('app.name', 'KapanRich')) }}
                     </h1>
                 </div>
