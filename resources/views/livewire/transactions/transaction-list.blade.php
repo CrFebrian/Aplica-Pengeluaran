@@ -1,6 +1,7 @@
 <div class="flex flex-col gap-md">
-    <div class="flex items-center justify-between">
-        <h2 class="font-display text-headline-md text-on-surface uppercase">Daftar Transaksi</h2>
+    <div class="flex flex-col mb-1 sm:mb-2">
+        <h2 class="font-display text-2xl sm:text-headline-md font-bold text-on-surface uppercase">DAFTAR TRANSAKSI</h2>
+        <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Jejak cuan dan pengeluaran lo nih. Pantau terus biar dompet tetap slay dan nggak mendadak boncos ya, bre!</p>
     </div>
 
     <div class="grid grid-cols-2 gap-sm sm:flex sm:flex-wrap">
@@ -22,15 +23,15 @@
         </button>
     </div>
 
-    <!-- Banner Total Periode Ini -->
+    <!-- Banner Total Periode Ini DENGAN TEKS & IKON HITAM PEKAT -->
     <div class="w-full bg-primary-fixed border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">
         <div class="flex flex-col">
-            <span class="font-sans text-label-caps font-bold text-gray-900">Total Periode Ini</span>
-            <span class="font-display text-headline-md text-gray-900">
+            <span class="font-sans text-label-caps font-bold text-black">Total Periode Ini</span>
+            <span class="font-display text-headline-md text-black">
                 {{ $totalPeriod >= 0 ? '+' : '-' }} Rp {{ number_format(abs($totalPeriod), 0, ',', '.') }}
             </span>
         </div>
-        <span class="material-symbols-outlined text-4xl text-gray-900 opacity-50">monitoring</span>
+        <span class="material-symbols-outlined text-4xl text-black">monitoring</span>
     </div>
 
     <!-- Transaction List -->

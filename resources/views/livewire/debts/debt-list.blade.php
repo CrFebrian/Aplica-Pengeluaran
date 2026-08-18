@@ -1,14 +1,17 @@
 <div class="flex flex-col gap-md">
+    <div class="flex flex-col mb-1 sm:mb-2">
+        <h2 class="font-display text-2xl sm:text-headline-md font-bold text-on-surface uppercase">BUKU HUTANG</h2>
+        <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Catatan utang lo nih, Biar nggak overthinking, pantau dan lunasin pelan-pelan ya bestie!</p>
+    </div>
 
-    <h2 class="font-display text-headline-md text-on-surface uppercase">Buku Hutang</h2>
     <div class="w-full bg-warning border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">
         <div class="flex flex-col">
-            <span class="font-sans text-label-caps font-bold text-on-warning">Total Hutang Aktif</span>
-            <span class="font-display text-headline-md text-on-warning">
+            <span class="font-sans text-label-caps font-bold text-black">Total Hutang Aktif</span>
+            <span class="font-display text-headline-md text-black">
                 Rp {{ number_format($totalActiveDebt, 0, ',', '.') }}
             </span>
         </div>
-        <span class="material-symbols-outlined text-4xl text-on-warning opacity-50">account_balance_wallet</span>
+        <span class="material-symbols-outlined text-4xl text-black">account_balance_wallet</span>
     </div>
 
     <div class="flex gap-sm">
@@ -91,7 +94,6 @@
             </div>
         @endforelse
     </div>
-
     <livewire:debts.debt-form />
 
     <!-- Modal Konfirmasi Tandai Lunas -->
@@ -99,7 +101,6 @@
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
 
             <div wire:click="cancelMarkAsPaid" class="absolute inset-0 bg-black/50"></div>
-
             <div class="relative w-full max-w-sm bg-surface-container border-2 border-outline-variant shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))] p-md flex flex-col gap-sm">
 
                 <div class="flex items-center gap-xs">
