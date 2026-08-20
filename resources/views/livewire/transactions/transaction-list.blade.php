@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-md">
     <div class="flex flex-col mb-1 sm:mb-2">
         <h2 class="font-display text-2xl sm:text-headline-md font-bold text-on-surface uppercase">DAFTAR TRANSAKSI</h2>
-        <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Jejak cuan dan pengeluaran lo nih. Pantau terus biar dompet tetap slay dan nggak mendadak boncos ya, bre!</p>
+        <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Jejak cuan dan pengeluaran lo nih, bre!</p>
     </div>
 
     <div class="grid grid-cols-2 gap-sm sm:flex sm:flex-wrap">

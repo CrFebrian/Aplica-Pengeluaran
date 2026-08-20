@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-md">
     <div class="flex flex-col mb-1 sm:mb-2">
         <h2 class="font-display text-2xl sm:text-headline-md font-bold text-on-surface uppercase">BUKU HUTANG</h2>
-        <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Catatan utang lo nih, Biar nggak overthinking, pantau dan lunasin pelan-pelan ya bestie!</p>
+        <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Catatan utang lo nih, Biar nggak overthinking, pantau dan lunasin pelan-pelan ya bre!</p>
     </div>
 
     <div class="w-full bg-warning border-2 border-outline-variant p-sm flex justify-between items-center shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))]">

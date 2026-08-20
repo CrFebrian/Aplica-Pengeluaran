@@ -140,7 +140,7 @@
                         </a>
                         <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate @click="sidebarOpen = false"
                            class="flex items-center gap-sm px-sm py-sm font-sans text-body-md {{ request()->routeIs('categories.*') ? 'bg-primary-container text-white' : 'text-on-surface hover:bg-surface-container-high' }} transition-colors">
-                            <span class="material-symbols-outlined">settings</span> Categori
+                            <span class="material-symbols-outlined">settings</span> Kategori
                         </a>
                     </nav>
 
@@ -175,38 +175,8 @@
             </button>
         @endif
 
-        <!-- BottomNavBar -->
-         <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant md:hidden">
-            <div class="flex justify-around items-center h-xl px-gutter bg-surface">
-                <!-- Dashboard Link -->
-                <a href="{{ route('dashboard') }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard') ? 'bg-secondary-container text-white border-2 border-on-surface dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span class="font-sans text-label-caps mt-1">Dash</span>
-                </a>
-
-                <!-- History Link -->
-                <a href="{{ Route::has('transactions.index') ? route('transactions.index') : '#' }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('transactions.*') ? 'bg-secondary-container text-white border-2 border-on-surface dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                    <span class="font-sans text-label-caps mt-1">History</span>
-                </a>
-
-                <!-- Debts Link -->
-                <a href="{{ Route::has('debts.index') ? route('debts.index') : '#' }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('debts.*') ? 'bg-secondary-container text-white border-2 border-on-surface dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">account_balance_wallet</span>
-                    <span class="font-sans text-label-caps mt-1">Debts</span>
-                </a>
-
-                <!-- Categories Link -->
-                <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('categories.*') ? 'bg-secondary-container text-white border-2 border-on-surface dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#fff] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span class="font-sans text-label-caps mt-1">Categori</span>
-                </a>
-            </div>
-        </nav>
+        {{-- CHANGED: BottomNavBar sekarang dipindah ke komponen terpisah (mobile-bottom-nav.blade.php) --}}
+        <x-mobile-bottom-nav/>
 
         <!-- Transaction Form Modal -->
         <livewire:transactions.transaction-form />
