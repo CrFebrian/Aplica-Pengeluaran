@@ -41,9 +41,9 @@
                     <x-theme-toggle size="h-10 w-10" />
                 </div>
                 <div class="w-full max-w-[420px] mx-auto relative z-10">
-                    <div class="mb-xl text-center md:text-left">
-                        <a href="{{ url('/') }}" wire:navigate class="inline-block transition-transform hover:-translate-y-0.5 active:translate-y-0">
-                            <x-app-logo size="h-12 w-12" class="mx-auto md:mx-0 mb-sm" fallback-class="mx-auto md:mx-0 mb-sm text-xl" />
+                    <div class="mb-xl flex flex-col items-center gap-sm text-center md:flex-row md:items-center md:gap-3 md:text-left">
+                        <a href="{{ url('/') }}" wire:navigate class="inline-block shrink-0 transition-transform hover:-translate-y-0.5 active:translate-y-0">
+                            <x-app-logo size="h-12 w-12" fallback-class="text-xl" />
                         </a>
                         <h1 class="font-display text-display-lg-mobile md:text-display-lg text-on-background uppercase tracking-tighter">
                             {{ config('app.name', 'KapanRich') }}

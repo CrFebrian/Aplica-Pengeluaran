@@ -14,7 +14,7 @@
         {{-- Indikator geser: lebar & posisinya dihitung relatif (%) terhadap pill, bukan piksel tetap,
              jadi tetap pas di HP ukuran berapa pun --}}
         <div
-            class="absolute top-2 bottom-2 left-2 rounded-full bg-on-background transition-transform duration-300 ease-out"
+            class="absolute top-2 bottom-2 left-2 rounded-full bg-white shadow-sm transition-transform duration-300 ease-out"
             style="width: calc((100% - 1rem) / 4); transform: translateX(calc({{ $activeIndex }} * 100%));"
         ></div>
 

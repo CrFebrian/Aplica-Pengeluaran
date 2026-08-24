@@ -43,7 +43,6 @@
         </div>
     </div>
     <section class="relative overflow-hidden bg-surface-container-low p-md neo-shadow-primary border-2 border-outline-variant flex flex-col gap-xs">
-        <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-outline-variant/40 pointer-events-none" style="font-size: 96px;">account_balance</span>
         <h3 class="font-sans text-label-caps font-bold text-on-surface-variant">TOTAL SALDO</h3>
         <div class="flex items-center gap-sm flex-wrap">
             <div class="font-display text-headline-md sm:text-display-lg-mobile text-on-surface">
