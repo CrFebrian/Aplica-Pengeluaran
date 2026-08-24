@@ -9,7 +9,6 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class CategoryManager extends Component
 {
-    // tab aktif — income | expense
     public string $activeType = 'expense';
 
     public bool $showModal = false;
@@ -17,6 +16,9 @@ class CategoryManager extends Component
     public string $name = '';
 
     public ?string $deleteError = null;
+
+    // id kategori yang sedang dikonfirmasi untuk dihapus
+    public ?int $confirmingDeleteId = null;
 
     protected function rules(): array
     {
@@ -55,7 +57,9 @@ class CategoryManager extends Component
     {
         $validated = $this->validate();
 
-        if ($this->editingId) {
+        $isEditing = (bool) $this->editingId;
+
+        if ($isEditing) {
             Category::where('user_id', auth()->id())
                 ->findOrFail($this->editingId)
                 ->update(['name' => $validated['name']]);
@@ -69,21 +73,49 @@ class CategoryManager extends Component
 
         $this->resetForm();
         $this->showModal = false;
+
+        // trigger popup sukses global
+        $this->dispatch(
+            'notify-success',
+            message: $isEditing ? 'Data Kategori Sudah Diubah' : 'Data Kategori Sudah Ditambahkan'
+        );
+    }
+
+    public function confirmDelete(int $categoryId): void
+    {
+        $this->deleteError = null;
+        $this->confirmingDeleteId = $categoryId;
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->confirmingDeleteId = null;
     }
 
     // akan ikut menghapus semua transaksi terkait jika dipaksa hapus.
-    public function delete(int $categoryId): void
+    public function delete(): void
     {
-        $category = Category::where('user_id', auth()->id())->withCount('transactions')->findOrFail($categoryId);
+        if (! $this->confirmingDeleteId) {
+            return;
+        }
+
+        $category = Category::where('user_id', auth()->id())->withCount('transactions')->findOrFail($this->confirmingDeleteId);
 
         if ($category->transactions_count > 0) {
             $this->deleteError = "Kategori \"{$category->name}\" tidak bisa dihapus karena masih dipakai di {$category->transactions_count} transaksi.";
+            $this->confirmingDeleteId = null;
 
             return;
         }
 
+        $categoryName = $category->name;
         $category->delete();
+
         $this->deleteError = null;
+        $this->confirmingDeleteId = null;
+
+        // Trigger popup sukses global
+        $this->dispatch('notify-success', message: "Kategori \"{$categoryName}\" Sudah Dihapus");
     }
 
     protected function resetForm(): void
@@ -101,8 +133,13 @@ class CategoryManager extends Component
             ->orderBy('name')
             ->get();
 
+        $confirmingCategory = $this->confirmingDeleteId
+            ? Category::where('user_id', auth()->id())->find($this->confirmingDeleteId)
+            : null;
+
         return view('livewire.categories.category-manager', [
             'categories' => $categories,
+            'confirmingCategory' => $confirmingCategory,
         ]);
     }
 }

@@ -60,10 +60,9 @@
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-container font-display text-base font-black text-white shadow-sm">
                         {{ strtoupper(substr(auth()->user()->name ?? '?', 0, 1)) }}
                     </div>
-                    <!-- Teks Nama & Email -->
+                    <!-- Teks: sengaja hanya label "Profile", bukan nama/email pengguna -->
                     <div class="min-w-0 flex flex-col">
-                        <span class="font-sans text-body-md font-bold text-on-surface truncate">{{ auth()->user()->name }}</span>
-                        <span class="font-sans text-label-caps text-on-surface-variant truncate opacity-80">{{ auth()->user()->email }}</span>
+                        <span class="font-sans text-body-md font-bold text-on-surface truncate">Profile</span>
                     </div>
                 </a>
             </div>
@@ -83,7 +82,6 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <x-theme-toggle size="h-8 w-8" flat />
-
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" aria-label="Account" class="text-primary active:translate-y-0.5 transition-transform">
                             <span class="material-symbols-outlined">account_circle</span>
@@ -169,6 +167,7 @@
             <button @click="$dispatch('open-debt-form')" aria-label="Catat Hutang" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-warning text-on-warning flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#78350f] active:shadow-[2px_2px_0px_0px_#78350f] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
             </button>
+        @elseif (request()->routeIs('categories.*'))
         @else
             <button @click="$dispatch('open-transaction-form')" aria-label="Tambah Transaksi" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-primary-container text-white flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#1e1b4b] active:shadow-[2px_2px_0px_0px_#1e1b4b] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
@@ -180,5 +179,7 @@
 
         <!-- Transaction Form Modal -->
         <livewire:transactions.transaction-form />
+        <!-- Success Toast -->
+        <x-success-toast />
     </body>
 </html>
