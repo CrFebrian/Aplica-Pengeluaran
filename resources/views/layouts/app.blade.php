@@ -69,15 +69,15 @@
             </div>
         </aside>
 
-        <div class="flex-1 min-w-0 min-h-screen pb-32 md:pb-0">
+        <div class="flex-1 min-w-0 min-h-screen overflow-x-hidden pb-32 md:pb-0">
             <!-- TopAppBar -->
             <header class="w-full top-0 sticky z-40 bg-background flex items-center justify-between px-margin-mobile py-sm border-b-2 border-outline-variant md:hidden">
-                <button @click="sidebarOpen = true" aria-label="Menu" class="text-primary active:translate-y-0.5 transition-transform">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
                 <div class="flex items-center gap-2">
-                    <x-app-logo size="h-6 w-6" fallback-class="text-xs" />
-                    <h1 class="font-display text-display-lg-mobile tracking-tighter text-primary">
+                    <button @click="sidebarOpen = true" aria-label="Menu" class="text-on-background active:translate-y-0.5 transition-transform">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
+                    <h1 class="font-display text-xl font-bold tracking-tighter text-on-background">
                         {{ strtoupper(config('app.name', 'KapanRich')) }}
                     </h1>
                 </div>
@@ -140,7 +140,7 @@
                         </a>
                         <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate @click="sidebarOpen = false"
                            class="flex items-center gap-sm px-sm py-sm font-sans text-body-md {{ request()->routeIs('categories.*') ? 'bg-primary-container text-white' : 'text-on-surface hover:bg-surface-container-high' }} transition-colors">
-                            <span class="material-symbols-outlined">settings</span> Categori
+                            <span class="material-symbols-outlined">settings</span> Kategori
                         </a>
                     </nav>
 
@@ -175,31 +175,8 @@
             </button>
         @endif
 
-        <!-- BottomNavBar -->
-        <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant md:hidden">
-            <div class="flex justify-around items-center h-xl px-gutter bg-surface">
-                <a href="{{ route('dashboard') }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span class="font-sans text-label-caps mt-1">Dashboard</span>
-                </a>
-                <a href="{{ Route::has('transactions.index') ? route('transactions.index') : '#' }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('transactions.*') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                    <span class="font-sans text-label-caps mt-1">History</span>
-                </a>
-                <a href="{{ Route::has('debts.index') ? route('debts.index') : '#' }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('debts.*') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">account_balance_wallet</span>
-                    <span class="font-sans text-label-caps mt-1">Debts</span>
-                </a>
-                <a href="{{ Route::has('categories.index') ? route('categories.index') : '#' }}" wire:navigate
-                   class="flex flex-col items-center justify-center {{ request()->routeIs('categories.*') ? 'bg-secondary-container text-on-secondary-container border-2 border-on-surface shadow-[4px_4px_0px_0px_#000] -translate-x-0.5 -translate-y-0.5' : 'text-on-surface-variant opacity-80' }} w-16 h-12 transition-all duration-100">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span class="font-sans text-label-caps mt-1">Categori</span>
-                </a>
-            </div>
-        </nav>
+        {{-- CHANGED: BottomNavBar sekarang dipindah ke komponen terpisah (mobile-bottom-nav.blade.php) --}}
+        <x-mobile-bottom-nav/>
 
         <!-- Transaction Form Modal -->
         <livewire:transactions.transaction-form />

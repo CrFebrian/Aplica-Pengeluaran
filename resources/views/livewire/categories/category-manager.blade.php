@@ -1,5 +1,4 @@
 @php
-    // NEW: helper lokal untuk menebak ikon dari nama kategori (fallback: label)
     $iconFor = function (string $name) {
         $name = strtolower($name);
         return match (true) {
@@ -16,26 +15,30 @@
 @endphp
 
 <div class="flex flex-col gap-md">
+    <div class="flex flex-col gap-4 mb-4">
+        <div>
+            <h2 class="font-display text-headline-md text-on-surface uppercase">Pengaturan Kategori</h2>
+            <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Atur kategori pemasukan dan pengeluaranmu di sini!</p>
+        </div>
 
-    <h2 class="font-display text-headline-md text-on-surface uppercase">Pengaturan Kategori</h2>
-    <button wire:click="openCreateModal"
-        class="w-full bg-primary text-white font-display text-title-sm py-3 border-2 border-outline-variant shadow-[6px_6px_0px_0px_#4f46e5] active:shadow-[2px_2px_0px_0px_#4f46e5] active:translate-x-[4px] active:translate-y-[4px] transition-all flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined">add</span>
-        TAMBAH KATEGORI
-    </button>
+        <button wire:click="openCreateModal"
+            class="w-full bg-primary text-white font-display text-sm md:text-title-sm py-2 md:py-3 px-sm md:px-md border-2 border-outline-variant shadow-[4px_4px_0px_0px_#4f46e5] md:shadow-[6px_6px_0px_0px_#4f46e5] active:shadow-[2px_2px_0px_0px_#4f46e5] active:translate-x-[4px] active:translate-y-[4px] transition-all flex items-center justify-center gap-1.5 md:gap-2">
+            <span class="material-symbols-outlined text-lg md:text-2xl">add</span>
+            TAMBAH KATEGORI
+        </button>
+    </div>
 
-    <div class="grid grid-cols-2 gap-sm">
+    <div class="grid grid-cols-2 gap-sm md:max-w-md">
         <button wire:click="setActiveType('income')"
-            class="py-3 border-2 font-display text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
+            class="py-2 md:py-3 border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PEMASUKAN
         </button>
         <button wire:click="setActiveType('expense')"
-            class="py-3 border-2 font-display text-title-sm transition-all {{ $activeType === 'expense' ? 'bg-tertiary text-on-tertiary border-outline-variant shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
+            class="py-2 md:py-3 border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'expense' ? 'bg-tertiary text-on-tertiary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PENGELUARAN
         </button>
     </div>
 
-    {{-- Delete error message --}}
     @if ($deleteError)
         <div class="bg-tertiary/10 border-2 border-tertiary p-sm flex items-start gap-2">
             <span class="material-symbols-outlined text-tertiary">error</span>
@@ -43,39 +46,39 @@
         </div>
     @endif
 
-    <div class="flex flex-col gap-sm">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-sm">
         @forelse ($categories as $category)
             <div wire:key="cat-{{ $category->id }}"
-                class="bg-surface-container border-2 border-outline-variant p-sm shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
-                <div class="flex items-center gap-sm min-w-0">
-                    <div class="w-11 h-11 shrink-0 flex items-center justify-center border-2 border-outline-variant bg-surface">
-                        <span class="material-symbols-outlined text-on-surface">{{ $iconFor($category->name) }}</span>
+                class="bg-surface-container border-2 border-outline-variant p-2 md:p-sm shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
+                <div class="flex items-center gap-2 md:gap-sm min-w-0">
+                    <div class="w-8 h-8 md:w-11 md:h-11 shrink-0 flex items-center justify-center border-2 border-outline-variant bg-surface">
+                        <span class="material-symbols-outlined text-on-surface text-lg md:text-2xl">{{ $iconFor($category->name) }}</span>
                     </div>
-                    <span class="font-sans text-body-lg text-on-surface truncate">{{ $category->name }}</span>
+                    <span class="font-sans text-sm md:text-body-lg text-on-surface truncate">{{ $category->name }}</span>
                 </div>
 
-                <div class="flex items-center gap-2 shrink-0">
+                <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
                     <button wire:click="openEditModal({{ $category->id }})" aria-label="Edit"
-                        class="w-10 h-10 flex items-center justify-center border-2 border-outline-variant bg-surface hover:bg-surface-container-high transition-colors">
-                        <span class="material-symbols-outlined text-primary text-xl">edit</span>
+                        class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-outline-variant bg-surface hover:bg-surface-container-high transition-colors">
+                        <span class="material-symbols-outlined text-primary text-base md:text-xl">edit</span>
                     </button>
                     <button wire:click="delete({{ $category->id }})" wire:confirm="Hapus kategori \"{{ $category->name }}\"?" aria-label="Hapus"
-                        class="w-10 h-10 flex items-center justify-center border-2 border-outline-variant bg-surface hover:bg-tertiary/10 transition-colors">
-                        <span class="material-symbols-outlined text-tertiary text-xl">delete</span>
+                        class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-outline-variant bg-surface hover:bg-tertiary/10 transition-colors">
+                        <span class="material-symbols-outlined text-tertiary text-base md:text-xl">delete</span>
                     </button>
                 </div>
             </div>
         @empty
-            <div class="bg-surface-container border-2 border-outline-variant p-lg text-center">
-                <p class="font-sans text-body-md text-on-surface-variant">
+            <div class="bg-surface-container border-2 border-outline-variant p-md md:p-lg text-center">
+                <p class="font-sans text-sm md:text-body-md text-on-surface-variant">
                     Belum ada kategori {{ $activeType === 'income' ? 'pemasukan' : 'pengeluaran' }}.
                 </p>
             </div>
         @endforelse
     </div>
-    <!-- Modal ini muncul di atas konten utama -->
+
     @if ($showModal)
-        <div class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="!fixed !inset-0 z-[9999] w-screen h-screen flex items-center justify-center p-4">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" wire:click="closeModal"></div>
 
             <div class="relative bg-surface border-2 border-outline neo-shadow w-full max-w-md flex flex-col">

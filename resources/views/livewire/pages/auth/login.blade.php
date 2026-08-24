@@ -75,9 +75,12 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
     </form>
 
-    <div class="mt-md text-center md:text-left">
+    <div class="mt-md flex justify-between items-center">
         <a class="font-sans text-body-md text-on-surface hover:text-primary transition-colors" href="{{ route('register') }}" wire:navigate>
             Belum punya akun?
+        </a>
+        <a class="font-sans text-body-md text-on-surface hover:text-primary transition-colors" href="{{ url('/') }}" wire:navigate>
+            Kembali ke Beranda
         </a>
     </div>
 </div>

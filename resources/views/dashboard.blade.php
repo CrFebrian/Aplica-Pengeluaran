@@ -35,7 +35,7 @@
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-xs">
         <div>
             <h2 class="font-display text-headline-md text-on-surface uppercase">Dashboard</h2>
-            <p class="font-sans text-body-md text-on-surface-variant mt-1">Ringkasan keuanganmu hari ini.</p>
+            <p class="font-sans text-base sm:text-lg text-on-surface-variant mt-1">Spill tipis-tipis kondisi keuangan lo hari ini, bre!</p>
         </div>
         <div class="inline-flex items-center gap-xs px-sm py-xs border-2 border-outline-variant bg-surface-container-low font-sans text-mono-data text-on-surface w-max">
             <span class="material-symbols-outlined text-outline text-lg">calendar_month</span>
@@ -43,7 +43,6 @@
         </div>
     </div>
     <section class="relative overflow-hidden bg-surface-container-low p-md neo-shadow-primary border-2 border-outline-variant flex flex-col gap-xs">
-        <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-outline-variant/40 pointer-events-none" style="font-size: 96px;">account_balance</span>
         <h3 class="font-sans text-label-caps font-bold text-on-surface-variant">TOTAL SALDO</h3>
         <div class="flex items-center gap-sm flex-wrap">
             <div class="font-display text-headline-md sm:text-display-lg-mobile text-on-surface">

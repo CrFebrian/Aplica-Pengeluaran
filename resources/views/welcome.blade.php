@@ -42,22 +42,23 @@
     <body class="antialiased font-sans bg-background text-on-background selection:bg-indigo-500 selection:text-white" x-data>
         <div class="relative min-h-screen overflow-hidden">
             <div class="pointer-events-none absolute inset-0 opacity-[0.2] dark:opacity-[0.2] text-black dark:text-white transition-colors duration-300" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px;"></div>
-            <div class="relative mx-auto max-w-7xl px-6 py-6">
 
-                <!-- Header -->
-                <header class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <x-app-logo size="h-10 w-10" fallback-class="border-black dark:border-outline-variant text-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] bg-indigo-500" />
-                        <span class="font-display text-xl font-black tracking-tight">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
-                    </div>
+            <!-- Header (full-width, di luar pembatas max-w supaya nempel ke tepi layar) -->
+            <header class="relative flex w-full items-center justify-between gap-2 px-4 py-4 sm:px-6 sm:py-6">
+                <div class="flex min-w-0 items-center gap-1.5 sm:gap-2">
+                    <x-app-logo size="h-8 w-8 sm:h-10 sm:w-10" fallback-class="border-black dark:border-outline-variant text-base sm:text-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#3f3f46] bg-indigo-500" />
+                    <span class="truncate font-display text-base font-black tracking-tight sm:text-xl">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
+                </div>
 
-                    <div class="flex items-center gap-3">
-                        <x-theme-toggle />
-                        @if (Route::has('login'))
-                            <livewire:welcome.navigation />
-                        @endif
-                    </div>
-                </header>
+                <div class="flex shrink-0 items-center gap-1.5 sm:gap-3">
+                    <x-theme-toggle size="h-8 w-8 sm:h-10 sm:w-10" />
+                    @if (Route::has('login'))
+                        <livewire:welcome.navigation />
+                    @endif
+                </div>
+            </header>
+
+            <div class="relative mx-auto max-w-screen-2xl px-4 py-4 sm:px-6 sm:py-6">
 
                 <!-- Hero -->
                 <main class="mt-12 grid grid-cols-1 items-center gap-12 lg:mt-20 lg:grid-cols-2 lg:gap-8">
@@ -84,14 +85,12 @@
                             <a
                                 href="{{ Route::has('register') ? route('register') : route('login') }}"
                                 class="w-full border-2 border-black dark:border-outline-variant bg-indigo-500 px-8 py-4 text-center font-display text-lg font-bold text-white shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#3f3f46] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_#000] active:translate-y-0 active:translate-x-0 active:shadow-[2px_2px_0px_0px_#000] sm:w-auto"
-                            >
-                                Gaskeun, Daftar →
+                            > Gaskeun, Daftar →
                             </a>
                             <a
                                 href="{{ route('login') }}"
                                 class="w-full border-2 border-black dark:border-outline-variant bg-white dark:bg-surface-container px-8 py-4 text-center font-display text-lg font-bold text-black dark:text-on-surface shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#3f3f46] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_#000] active:translate-y-0 active:translate-x-0 active:shadow-[2px_2px_0px_0px_#000] sm:w-auto"
-                            >
-                                Udah Punya Akun
+                            > Udah Punya Akun
                             </a>
                         </div>
                     </div>
@@ -103,7 +102,7 @@
                             <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto overflow-visible">
                                 <!-- Shadow blob dasar -->
                                 <ellipse cx="200" cy="430" rx="120" ry="18" class="fill-black/10 dark:fill-black/40" />
-                                <rect x="40" y="30" width="320" height="320" rx="4" class="fill-amber-300 dark:fill-primary-container" stroke="black" stroke-width="4" transform="rotate(-4 200 190)" />
+                                <rect x="40" y="30" width="320" height="320" rx="4" class="fill-amber-300 dark:fill-amber-500" stroke="black" stroke-width="4" transform="rotate(-4 200 190)" />
                                 <path d="M140 120 Q140 60 200 58 Q260 60 260 120 L260 190 L140 190 Z" fill="#1f1f22" stroke="black" stroke-width="4"/>
                                 <path d="M110 460 L110 330 Q110 270 200 268 Q290 270 290 330 L290 460 Z" class="fill-indigo-500 dark:fill-primary" stroke="black" stroke-width="4"/>
                                 <circle cx="200" cy="165" r="62" class="fill-[#ffcfa8]" stroke="black" stroke-width="4"/>
