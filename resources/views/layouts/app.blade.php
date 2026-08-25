@@ -56,10 +56,9 @@
 
                 <a href="{{ route('profile') }}" wire:navigate
                 class="mt-2 flex items-center gap-3 p-3 rounded-2xl bg-surface border border-outline-variant/50 hover:bg-surface-container-high hover:border-outline-variant transition-all duration-300 hover:shadow-sm">
-                    <!-- Ikon Inisial (Bulat) -->
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-container font-display text-base font-black text-white shadow-sm">
-                        {{ strtoupper(substr(auth()->user()->name ?? '?', 0, 1)) }}
-                    </div>
+                    <!-- NEW: Foto profil anime unik per user (menggantikan bulatan inisial huruf) -->
+                    <img src="{{ auth()->user()->avatarUrl() }}" alt="Foto profil"
+                        class="flex h-10 w-10 shrink-0 rounded-full bg-primary-container shadow-sm object-cover">
                     <!-- Teks: sengaja hanya label "Profile", bukan nama/email pengguna -->
                     <div class="min-w-0 flex flex-col">
                         <span class="font-sans text-body-md font-bold text-on-surface truncate">Profile</span>
@@ -82,6 +81,7 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <x-theme-toggle size="h-8 w-8" flat />
+
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" aria-label="Account" class="text-primary active:translate-y-0.5 transition-transform">
                             <span class="material-symbols-outlined">account_circle</span>
@@ -179,6 +179,7 @@
 
         <!-- Transaction Form Modal -->
         <livewire:transactions.transaction-form />
+
         <!-- Success Toast -->
         <x-success-toast />
     </body>

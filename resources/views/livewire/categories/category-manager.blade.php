@@ -28,13 +28,18 @@
         </button>
     </div>
 
-    <div class="grid grid-cols-2 gap-sm md:inline-grid md:grid-cols-[12rem_12rem]">
+    {{-- FIXED: sebelumnya lebar tombol dikunci angka pasti (12rem 12rem) — jadi tombol tidak
+         benar-benar responsive, cuma "kaku" di ukuran tetap. Sekarang pakai flex + flex-1:
+         di mobile tombol otomatis membagi rata lebar layar, di desktop container dibatasi
+         max-w agar tidak melebar sampai ujung layar, tapi tombol tetap mengisi proporsional
+         mengikuti ruang yang tersedia — benar-benar menyesuaikan device, bukan angka fix. --}}
+    <div class="flex gap-sm w-full md:max-w-md">
         <button wire:click="setActiveType('income')"
-            class="py-2 md:py-3 md:px-md border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
+            class="flex-1 py-2 md:py-3 px-sm border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PEMASUKAN
         </button>
         <button wire:click="setActiveType('expense')"
-            class="py-2 md:py-3 md:px-md border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'expense' ? 'bg-tertiary text-on-tertiary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
+            class="flex-1 py-2 md:py-3 px-sm border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'expense' ? 'bg-tertiary text-on-tertiary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PENGELUARAN
         </button>
     </div>
@@ -46,7 +51,11 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-sm">
+    {{-- FIXED: breakpoint md->xl langsung lompat terlalu jauh, sehingga di layar
+         desktop standar/laptop kecil (md-lg) terasa seperti "masih mobile" karena
+         kartunya kepepet 2 kolom terlalu lama. Sekarang transisinya lebih halus:
+         1 kolom (hp) -> 2 kolom (tablet, sm) -> 3 kolom (laptop/desktop, lg). --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm">
         @forelse ($categories as $category)
             <div wire:key="cat-{{ $category->id }}"
                 class="bg-surface-container border-2 border-outline-variant p-2 md:p-sm shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
@@ -62,7 +71,7 @@
                         class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-outline-variant bg-surface hover:bg-surface-container-high transition-colors">
                         <span class="material-symbols-outlined text-primary text-base md:text-xl">edit</span>
                     </button>
-                    {{-- FIXED: wire:confirm --}}
+                    {{-- FIXED: wire:confirm (popup browser polos) diganti modal custom bertema aplikasi --}}
                     <button wire:click="confirmDelete({{ $category->id }})" aria-label="Hapus"
                         class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-outline-variant bg-surface hover:bg-tertiary/10 transition-colors">
                         <span class="material-symbols-outlined text-tertiary text-base md:text-xl">delete</span>
@@ -121,11 +130,14 @@
         </div>
     @endif
 
+    {{-- NEW: Modal konfirmasi hapus kategori — menggantikan wire:confirm bawaan browser.
+         Bertema tertiary (merah/pink) karena ini aksi destruktif, dengan animasi transisi Alpine. --}}
     @if ($confirmingCategory)
         <div
             x-data
             x-init="$nextTick(() => $el.querySelector('[data-modal-panel]')?.focus())"
-            class="!fixed !inset-0 z-[9999] w-screen h-screen flex items-center justify-center p-4">
+            class="!fixed !inset-0 z-[9999] w-screen h-screen flex items-center justify-center p-4"
+        >
             <div
                 x-show="true"
                 x-transition:enter="transition ease-out duration-200"
@@ -135,8 +147,8 @@
                 x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0"
                 class="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                wire:click="cancelDelete">
-            </div>
+                wire:click="cancelDelete"
+            ></div>
 
             <div
                 x-show="true"
@@ -148,7 +160,8 @@
                 x-transition:leave-end="opacity-0 scale-95 translate-y-2"
                 tabindex="-1"
                 data-modal-panel
-                class="relative bg-surface border-2 border-outline shadow-[6px_6px_0px_0px_#7f1d1d] w-full max-w-sm flex flex-col outline-none">
+                class="relative bg-surface border-2 border-outline shadow-[6px_6px_0px_0px_#7f1d1d] w-full max-w-sm flex flex-col outline-none"
+            >
                 <div class="p-md flex flex-col gap-sm">
                     <div class="flex items-center gap-xs">
                         <span class="w-10 h-10 shrink-0 flex items-center justify-center border-2 border-outline-variant bg-tertiary/10">
