@@ -12,7 +12,6 @@
 
     $incomeThisMonth = $user->transactions()->where('type', 'income')->whereBetween('transaction_date', [$startOfMonth, $endOfMonth])->sum('amount');
     $expenseThisMonth = $user->transactions()->where('type', 'expense')->whereBetween('transaction_date', [$startOfMonth, $endOfMonth])->sum('amount');
-
     $incomePrevMonth = $user->transactions()->where('type', 'income')->whereBetween('transaction_date', [$startOfPrevMonth, $endOfPrevMonth])->sum('amount');
     $expensePrevMonth = $user->transactions()->where('type', 'expense')->whereBetween('transaction_date', [$startOfPrevMonth, $endOfPrevMonth])->sum('amount');
 
@@ -29,6 +28,58 @@
     $paidDebts = $user->debts()->where('is_paid', true)->latest('updated_at')->take(4)->get();
 
     $recentTransactions = $user->transactions()->with('category')->latest('transaction_date')->latest('id')->take(5)->get();
+
+    $totalHutangAktif = $user->debts()->where('is_paid', false)->sum('amount');
+    $allocationTotal = $incomeThisMonth + $expenseThisMonth + $totalHutangAktif;
+
+    $donutRadius = 70;
+    $donutCircumference = 2 * M_PI * $donutRadius;
+    $gapSize = 6;
+    $gapTotal = count([1,2,3]) * $gapSize;
+    $chartTotal = max(0, $donutCircumference - $gapTotal);
+
+    $allocationSlices = [
+        [
+            'label' => 'Pendapatan',
+            'value' => $incomeThisMonth,
+            'color' => '#34d399',
+            'class' => 'text-income',
+            'borderClass' => 'border-income',
+            'bgClass' => 'bg-income',
+            'icon' => 'trending_up',
+        ],
+        [
+            'label' => 'Pengeluaran',
+            'value' => $expenseThisMonth,
+            'color' => '#fb7185',
+            'class' => 'text-expense',
+            'borderClass' => 'border-expense',
+            'bgClass' => 'bg-expense',
+            'icon' => 'trending_down',
+        ],
+        [
+            'label' => 'Hutang Aktif',
+            'value' => $totalHutangAktif,
+            'color' => '#6366f1',
+            'class' => 'text-primary',
+            'borderClass' => 'border-primary',
+            'bgClass' => 'bg-primary',
+            'icon' => 'account_balance_wallet',
+            'inverted' => true,
+        ],
+    ];
+
+    $cumulative = 0;
+    foreach ($allocationSlices as $i => &$slice) {
+        $pct = $allocationTotal > 0 ? ($slice['value'] / $allocationTotal) * 100 : 0;
+        $slice['pct'] = $pct;
+        $slice['barPct'] = !empty($slice['inverted']) ? max(0, 100 - $pct) : $pct;
+        $slice['length'] = $allocationTotal > 0 ? ($pct / 100) * $chartTotal : 0;
+        $slice['offset'] = -$cumulative;
+        $slice['delay'] = $i * 200;
+        $cumulative += $slice['length'];
+    }
+    unset($slice);
 @endphp
 
 <x-app-layout>
@@ -93,6 +144,108 @@
             </div>
         </div>
     </div>
+
+    <!-- Alokasi Keuangan: donut chart -->
+    <section
+        x-data="{ animated: false, hovered: -1 }"
+        x-init="$nextTick(() => setTimeout(() => animated = true, 100))"
+        class="bg-surface-container-low p-md neo-shadow border-2 border-outline-variant flex flex-col gap-md">
+        <div>
+            <h3 class="font-display text-title-sm text-on-surface">ALOKASI KEUANGAN</h3>
+            <p class="font-sans text-body-md text-on-surface-variant">Pendapatan, pengeluaran, dan hutang bulan ini dalam satu lirikan, bre!</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-lg">
+            <div class="relative w-[200px] h-[200px] sm:w-[220px] sm:h-[220px] md:w-[260px] md:h-[260px] shrink-0">
+                <svg viewBox="0 0 180 180" class="w-full h-full -rotate-90 drop-shadow-sm">
+                    {{-- Background ring --}}
+                    <circle cx="90" cy="90" r="{{ $donutRadius }}" fill="none"
+                        stroke="rgb(var(--color-surface-container-highest))" stroke-width="28"
+                        stroke-linecap="butt"></circle>
+                    @foreach ($allocationSlices as $i => $slice)
+                        <circle
+                            cx="90" cy="90" r="{{ $donutRadius }}" fill="none"
+                            stroke="{{ $slice['color'] }}"
+                            stroke-width="28"
+                            stroke-linecap="butt"
+                            x-bind:style="animated
+                                ? 'stroke-dasharray: {{ $slice['length'] }} {{ $donutCircumference - $slice['length'] }}; stroke-dashoffset: {{ $slice['offset'] }}; transition: stroke-dasharray 1000ms cubic-bezier(.4,0,.2,1) {{ $slice['delay'] }}ms, stroke-width 200ms ease, filter 200ms ease; ' + (hovered === {{ $i }} ? 'stroke-width: 32; filter: drop-shadow(0 0 6px {{ $slice['color'] }}80);' : '')
+                                : 'stroke-dasharray: 0 {{ $donutCircumference }}; stroke-dashoffset: {{ $slice['offset'] }}; transition: stroke-dasharray 1000ms cubic-bezier(.4,0,.2,1) {{ $slice['delay'] }}ms;'"
+                            x-on:mouseenter="hovered = {{ $i }}"
+                            x-on:mouseleave="hovered = -1"
+                            class="cursor-pointer"
+                        ></circle>
+                    @endforeach
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <template x-if="hovered === -1">
+                        <div class="flex flex-col items-center gap-0.5">
+                            <span class="font-sans text-label-caps text-on-surface-variant">TOTAL SALDO</span>
+                            <span class="font-display text-title-sm text-on-surface text-center leading-tight px-2">
+                                Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+                            </span>
+                        </div>
+                    </template>
+                    <template x-if="hovered >= 0">
+                        <div class="flex flex-col items-center gap-0.5">
+                            @php
+                                $labels = array_column($allocationSlices, 'label');
+                                $values = array_column($allocationSlices, 'value');
+                                $pcts = array_column($allocationSlices, 'pct');
+                            @endphp
+                            <span class="font-sans text-label-caps text-on-surface-variant" x-text="{{ json_encode($labels) }}[hovered]"></span>
+                            <span class="font-display text-title-sm text-on-surface text-center leading-tight px-2">
+                                Rp <span x-text="Number({{ json_encode($values) }}[hovered]).toLocaleString('id-ID')"></span>
+                            </span>
+                            <span class="font-sans text-mono-data font-bold text-on-surface"
+                                x-bind:class="hovered === 0 ? 'text-income' : (hovered === 1 ? 'text-expense' : 'text-primary')"
+                                x-text="Number({{ json_encode($pcts) }}[hovered]).toFixed(1) + '%'">
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            {{-- Legend --}}
+            <div class="flex flex-col gap-sm w-full">
+                @php
+                    $hoverBorderClasses = ['border-income', 'border-expense', 'border-primary'];
+                    $hoverShadowClasses = ['neo-shadow-success', 'neo-shadow-danger', 'neo-shadow-primary'];
+                @endphp
+                @foreach ($allocationSlices as $i => $slice)
+                    <div
+                        class="flex flex-col gap-xs p-sm border-2 border-outline-variant bg-surface-container cursor-pointer transition-all duration-200"
+                        x-on:mouseenter="hovered = {{ $i }}"
+                        x-on:mouseleave="hovered = -1"
+                        x-bind:class="hovered === {{ $i }} ? '{{ $hoverBorderClasses[$i] }} {{ $hoverShadowClasses[$i] }} scale-[1.01]' : ''"
+                    >
+                        <div class="flex items-center justify-between gap-sm">
+                            <div class="flex items-center gap-xs min-w-0">
+                                <span class="w-3 h-3 shrink-0 border border-outline-variant" style="background-color: {{ $slice['color'] }}"></span>
+                                <span class="font-sans text-body-lg font-semibold text-on-surface truncate">{{ $slice['label'] }}</span>
+                            </div>
+                            <div class="flex items-center gap-sm shrink-0">
+                                <span class="font-sans text-mono-data text-on-surface-variant">Rp {{ number_format($slice['value'], 0, ',', '.') }}</span>
+                                <span class="font-sans text-mono-data font-bold {{ $slice['class'] }} w-14 text-right">{{ round($slice['pct']) }}%</span>
+                            </div>
+                        </div>
+                        {{-- Progress bar --}}
+                        <div class="w-full h-2 bg-surface-container-highest border border-outline-variant overflow-hidden">
+                            <div class="h-full transition-all duration-700 ease-out"
+                                style="background-color: {{ $slice['color'] }};"
+                                x-bind:style="animated ? 'width: {{ $slice['barPct'] }}%' : 'width: 0%'">
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                @if ($allocationTotal <= 0)
+                    <div class="p-sm text-center font-sans text-body-md text-on-surface-variant border-2 border-dashed border-outline-variant">
+                        Belum ada data bulan ini.
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-md items-start">
         <!-- Recent Transactions (kolom kiri, lebih lebar) -->

@@ -22,18 +22,13 @@
         </div>
 
         <button wire:click="openCreateModal"
-            class="w-full bg-primary text-white font-display text-sm md:text-title-sm py-2 md:py-3 px-sm md:px-md border-2 border-outline-variant shadow-[4px_4px_0px_0px_#4f46e5] md:shadow-[6px_6px_0px_0px_#4f46e5] active:shadow-[2px_2px_0px_0px_#4f46e5] active:translate-x-[4px] active:translate-y-[4px] transition-all flex items-center justify-center gap-1.5 md:gap-2">
+            class="w-full bg-white text-primary font-display text-sm md:text-title-sm py-2 md:py-3 px-sm md:px-md border-2 border-primary shadow-[4px_4px_0px_0px_#4f46e5] md:shadow-[6px_6px_0px_0px_#4f46e5] active:shadow-[2px_2px_0px_0px_#4f46e5] active:translate-x-[4px] active:translate-y-[4px] transition-all flex items-center justify-center gap-1.5 md:gap-2">
             <span class="material-symbols-outlined text-lg md:text-2xl">add</span>
             TAMBAH KATEGORI
         </button>
     </div>
 
-    {{-- FIXED: sebelumnya lebar tombol dikunci angka pasti (12rem 12rem) — jadi tombol tidak
-         benar-benar responsive, cuma "kaku" di ukuran tetap. Sekarang pakai flex + flex-1:
-         di mobile tombol otomatis membagi rata lebar layar, di desktop container dibatasi
-         max-w agar tidak melebar sampai ujung layar, tapi tombol tetap mengisi proporsional
-         mengikuti ruang yang tersedia — benar-benar menyesuaikan device, bukan angka fix. --}}
-    <div class="flex gap-sm w-full md:max-w-md">
+    <div class="flex gap-sm w-full">
         <button wire:click="setActiveType('income')"
             class="flex-1 py-2 md:py-3 px-sm border-2 font-display text-sm md:text-title-sm transition-all {{ $activeType === 'income' ? 'bg-secondary text-on-secondary border-outline-variant shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))]' : 'bg-surface-container text-on-surface-variant border-outline-variant hover:bg-surface-container-high' }}">
             PEMASUKAN
@@ -51,10 +46,6 @@
         </div>
     @endif
 
-    {{-- FIXED: breakpoint md->xl langsung lompat terlalu jauh, sehingga di layar
-         desktop standar/laptop kecil (md-lg) terasa seperti "masih mobile" karena
-         kartunya kepepet 2 kolom terlalu lama. Sekarang transisinya lebih halus:
-         1 kolom (hp) -> 2 kolom (tablet, sm) -> 3 kolom (laptop/desktop, lg). --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm">
         @forelse ($categories as $category)
             <div wire:key="cat-{{ $category->id }}"
@@ -130,8 +121,6 @@
         </div>
     @endif
 
-    {{-- NEW: Modal konfirmasi hapus kategori — menggantikan wire:confirm bawaan browser.
-         Bertema tertiary (merah/pink) karena ini aksi destruktif, dengan animasi transisi Alpine. --}}
     @if ($confirmingCategory)
         <div
             x-data

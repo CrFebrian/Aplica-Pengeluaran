@@ -91,7 +91,7 @@
                             <a href="{{ route('profile') }}" wire:navigate class="block px-sm py-xs font-sans text-body-md text-on-surface hover:bg-surface-container-high transition-colors">
                                 Profil
                             </a>
-                            <form method="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}" class="hidden md:block">
                                 @csrf
                                 <button type="submit" class="w-full text-left px-sm py-xs font-sans text-body-md text-tertiary hover:bg-surface-container-high transition-colors">
                                     Keluar
@@ -179,7 +179,6 @@
 
         <!-- Transaction Form Modal -->
         <livewire:transactions.transaction-form />
-
         <!-- Success Toast -->
         <x-success-toast />
     </body>
