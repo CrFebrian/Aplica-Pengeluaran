@@ -98,10 +98,34 @@
 
     <!-- Modal Konfirmasi Tandai Lunas -->
     @if ($confirmingDebt)
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
-
-            <div wire:click="cancelMarkAsPaid" class="absolute inset-0 bg-black/50"></div>
-            <div class="relative w-full max-w-sm bg-surface-container border-2 border-outline-variant shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))] p-md flex flex-col gap-sm">
+        <div
+            x-data
+            x-init="$nextTick(() => $el.querySelector('[data-modal-panel]')?.focus())"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4"
+        >
+            <div
+                x-show="true"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                wire:click="cancelMarkAsPaid"
+                class="absolute inset-0 bg-black/50"
+            ></div>
+            <div
+                x-show="true"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                tabindex="-1"
+                data-modal-panel
+                class="relative w-full max-w-sm bg-surface-container border-2 border-outline-variant shadow-[6px_6px_0px_0px_rgb(var(--color-shadow-ink))] p-md flex flex-col gap-sm outline-none"
+            >
 
                 <div class="flex items-center gap-xs">
                     <span class="material-symbols-outlined text-primary">task_alt</span>

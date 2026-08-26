@@ -53,6 +53,8 @@ class DebtForm extends Component
         $this->resetForm();
         $this->showModal = false;
         $this->dispatch('debt-saved');
+        // Notify success
+        $this->dispatch('notify-success', message: 'Data Hutang Sudah Ditambahkan');
     }
 
     protected function resetForm(): void

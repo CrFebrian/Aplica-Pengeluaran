@@ -42,12 +42,17 @@ class DebtList extends Component
 
         $debt = Debt::where('user_id', auth()->id())->findOrFail($this->confirmingDebtId);
 
+        $debtName = $debt->creditor_name;
+
         $debt->update([
             'is_paid' => true,
             'paid_at' => now()->toDateString(),
         ]);
 
         $this->confirmingDebtId = null;
+
+        // Trigger popup sukses global (dengan animasi centang) saat hutang ditandai lunas
+        $this->dispatch('notify-success', message: "Hutang \"{$debtName}\" Sudah Ditandai Lunas");
     }
 
     public function render()

@@ -77,6 +77,8 @@ class TransactionForm extends Component
         $this->resetForm();
         $this->showModal = false;
         $this->dispatch('transaction-saved');
+        // Notify success
+        $this->dispatch('notify-success', message: 'Data Transaksi Sudah Ditambahkan');
 
         // jika bukan dari halaman transactions, redirect ke halaman sebelumnya (misal dari dashboard)
         if (! request()->routeIs('transactions.*')) {

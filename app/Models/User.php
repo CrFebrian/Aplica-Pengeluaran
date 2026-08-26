@@ -10,13 +10,36 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'avatar_seed'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (User $user) {
+            if (empty($user->avatar_seed)) {
+                $user->avatar_seed = (string) Str::uuid();
+            }
+        });
+    }
+
+    /**
+     * Get the URL for the user's avatar.
+     */
+    public function avatarUrl(): string
+    {
+        $seed = $this->avatar_seed ?: (string) $this->id;
+
+        return 'https://api.dicebear.com/9.x/adventurer/svg?seed='.urlencode($seed).'&backgroundType=solid';
+    }
 
     /**
      * Get the attributes that should be cast.

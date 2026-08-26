@@ -56,14 +56,12 @@
 
                 <a href="{{ route('profile') }}" wire:navigate
                 class="mt-2 flex items-center gap-3 p-3 rounded-2xl bg-surface border border-outline-variant/50 hover:bg-surface-container-high hover:border-outline-variant transition-all duration-300 hover:shadow-sm">
-                    <!-- Ikon Inisial (Bulat) -->
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-container font-display text-base font-black text-white shadow-sm">
-                        {{ strtoupper(substr(auth()->user()->name ?? '?', 0, 1)) }}
-                    </div>
-                    <!-- Teks Nama & Email -->
+                    <!-- NEW: Foto profil anime unik per user (menggantikan bulatan inisial huruf) -->
+                    <img src="{{ auth()->user()->avatarUrl() }}" alt="Foto profil"
+                        class="flex h-10 w-10 shrink-0 rounded-full bg-primary-container shadow-sm object-cover">
+                    <!-- Teks: sengaja hanya label "Profile", bukan nama/email pengguna -->
                     <div class="min-w-0 flex flex-col">
-                        <span class="font-sans text-body-md font-bold text-on-surface truncate">{{ auth()->user()->name }}</span>
-                        <span class="font-sans text-label-caps text-on-surface-variant truncate opacity-80">{{ auth()->user()->email }}</span>
+                        <span class="font-sans text-body-md font-bold text-on-surface truncate">Profile</span>
                     </div>
                 </a>
             </div>
@@ -72,28 +70,25 @@
         <div class="flex-1 min-w-0 min-h-screen overflow-x-hidden pb-32 md:pb-0">
             <!-- TopAppBar -->
             <header class="w-full top-0 sticky z-40 bg-background flex items-center justify-between px-margin-mobile py-sm border-b-2 border-outline-variant md:hidden">
-                <div class="flex items-center gap-2">
-                    <button @click="sidebarOpen = true" aria-label="Menu" class="text-on-background active:translate-y-0.5 transition-transform">
-                        <span class="material-symbols-outlined">menu</span>
-                    </button>
-                    <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
-                    <h1 class="font-display text-xl font-bold tracking-tighter text-on-background">
+                <div class="flex items-center gap-3">
+                    <x-app-logo size="h-10 w-10" fallback-class="text-sm" />
+                    <h1 class="font-display text-2xl font-bold tracking-tighter text-on-background">
                         {{ strtoupper(config('app.name', 'KapanRich')) }}
                     </h1>
                 </div>
                 <div class="flex items-center gap-3">
-                    <x-theme-toggle size="h-8 w-8" flat />
+                    <x-theme-toggle size="h-10 w-10" />
 
                     <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" aria-label="Account" class="text-primary active:translate-y-0.5 transition-transform">
-                            <span class="material-symbols-outlined">account_circle</span>
+                        <button @click="open = !open" aria-label="Account" class="w-10 h-10 flex items-center justify-center text-primary active:translate-y-0.5 transition-transform">
+                            <span class="material-symbols-outlined text-2xl">account_circle</span>
                         </button>
                         <div x-show="open" @click.outside="open = false" x-cloak
                              class="absolute right-0 mt-xs w-48 bg-surface-container border-2 border-outline-variant neo-shadow z-50">
                             <a href="{{ route('profile') }}" wire:navigate class="block px-sm py-xs font-sans text-body-md text-on-surface hover:bg-surface-container-high transition-colors">
                                 Profil
                             </a>
-                            <form method="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}" class="hidden md:block">
                                 @csrf
                                 <button type="submit" class="w-full text-left px-sm py-xs font-sans text-body-md text-tertiary hover:bg-surface-container-high transition-colors">
                                     Keluar
@@ -169,6 +164,7 @@
             <button @click="$dispatch('open-debt-form')" aria-label="Catat Hutang" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-warning text-on-warning flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#78350f] active:shadow-[2px_2px_0px_0px_#78350f] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
             </button>
+        @elseif (request()->routeIs('categories.*'))
         @else
             <button @click="$dispatch('open-transaction-form')" aria-label="Tambah Transaksi" class="fixed bottom-24 right-margin-mobile w-16 h-16 bg-primary-container text-white flex items-center justify-center border-2 border-outline-variant shadow-[6px_6px_0px_0px_#1e1b4b] active:shadow-[2px_2px_0px_0px_#1e1b4b] active:translate-y-1 active:translate-x-1 transition-all z-40 md:right-margin-desktop md:bottom-10">
                 <span class="material-symbols-outlined" style="font-size: 32px;">add</span>
@@ -180,5 +176,7 @@
 
         <!-- Transaction Form Modal -->
         <livewire:transactions.transaction-form />
+        <!-- Success Toast -->
+        <x-success-toast />
     </body>
 </html>
