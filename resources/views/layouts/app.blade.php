@@ -70,21 +70,18 @@
         <div class="flex-1 min-w-0 min-h-screen overflow-x-hidden pb-32 md:pb-0">
             <!-- TopAppBar -->
             <header class="w-full top-0 sticky z-40 bg-background flex items-center justify-between px-margin-mobile py-sm border-b-2 border-outline-variant md:hidden">
-                <div class="flex items-center gap-2">
-                    <button @click="sidebarOpen = true" aria-label="Menu" class="text-on-background active:translate-y-0.5 transition-transform">
-                        <span class="material-symbols-outlined">menu</span>
-                    </button>
-                    <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
-                    <h1 class="font-display text-xl font-bold tracking-tighter text-on-background">
+                <div class="flex items-center gap-3">
+                    <x-app-logo size="h-10 w-10" fallback-class="text-sm" />
+                    <h1 class="font-display text-2xl font-bold tracking-tighter text-on-background">
                         {{ strtoupper(config('app.name', 'KapanRich')) }}
                     </h1>
                 </div>
                 <div class="flex items-center gap-3">
-                    <x-theme-toggle size="h-8 w-8" flat />
+                    <x-theme-toggle size="h-10 w-10" />
 
                     <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" aria-label="Account" class="text-primary active:translate-y-0.5 transition-transform">
-                            <span class="material-symbols-outlined">account_circle</span>
+                        <button @click="open = !open" aria-label="Account" class="w-10 h-10 flex items-center justify-center text-primary active:translate-y-0.5 transition-transform">
+                            <span class="material-symbols-outlined text-2xl">account_circle</span>
                         </button>
                         <div x-show="open" @click.outside="open = false" x-cloak
                              class="absolute right-0 mt-xs w-48 bg-surface-container border-2 border-outline-variant neo-shadow z-50">

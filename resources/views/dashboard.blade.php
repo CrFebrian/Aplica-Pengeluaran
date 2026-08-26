@@ -160,7 +160,7 @@
                 <svg viewBox="0 0 180 180" class="w-full h-full -rotate-90 drop-shadow-sm">
                     {{-- Background ring --}}
                     <circle cx="90" cy="90" r="{{ $donutRadius }}" fill="none"
-                        stroke="rgb(var(--color-surface-container-highest))" stroke-width="28"
+                        stroke="rgb(var(--color-surface-container))" stroke-width="28"
                         stroke-linecap="butt"></circle>
                     @foreach ($allocationSlices as $i => $slice)
                         <circle
@@ -192,13 +192,14 @@
                                 $labels = array_column($allocationSlices, 'label');
                                 $values = array_column($allocationSlices, 'value');
                                 $pcts = array_column($allocationSlices, 'pct');
+                                $colors = array_column($allocationSlices, 'color');
                             @endphp
                             <span class="font-sans text-label-caps text-on-surface-variant" x-text="{{ json_encode($labels) }}[hovered]"></span>
                             <span class="font-display text-title-sm text-on-surface text-center leading-tight px-2">
                                 Rp <span x-text="Number({{ json_encode($values) }}[hovered]).toLocaleString('id-ID')"></span>
                             </span>
-                            <span class="font-sans text-mono-data font-bold text-on-surface"
-                                x-bind:class="hovered === 0 ? 'text-income' : (hovered === 1 ? 'text-expense' : 'text-primary')"
+                            <span class="font-sans text-mono-data font-bold"
+                                x-bind:style="'color: ' + {{ json_encode($colors) }}[hovered] + ';'"
                                 x-text="Number({{ json_encode($pcts) }}[hovered]).toFixed(1) + '%'">
                             </span>
                         </div>
@@ -208,16 +209,14 @@
 
             {{-- Legend --}}
             <div class="flex flex-col gap-sm w-full">
-                @php
-                    $hoverBorderClasses = ['border-income', 'border-expense', 'border-primary'];
-                    $hoverShadowClasses = ['neo-shadow-success', 'neo-shadow-danger', 'neo-shadow-primary'];
-                @endphp
                 @foreach ($allocationSlices as $i => $slice)
                     <div
-                        class="flex flex-col gap-xs p-sm border-2 border-outline-variant bg-surface-container cursor-pointer transition-all duration-200"
+                        class="flex flex-col gap-xs p-sm border-2 bg-surface-container cursor-pointer transition-all duration-200"
                         x-on:mouseenter="hovered = {{ $i }}"
                         x-on:mouseleave="hovered = -1"
-                        x-bind:class="hovered === {{ $i }} ? '{{ $hoverBorderClasses[$i] }} {{ $hoverShadowClasses[$i] }} scale-[1.01]' : ''"
+                        x-bind:style="hovered === {{ $i }}
+                            ? 'border-color: {{ $slice['color'] }}; box-shadow: 6px 6px 0px 0px {{ $slice['color'] }}; transform: translate(-2px, -2px);'
+                            : 'border-color: rgb(var(--color-outline-variant));'"
                     >
                         <div class="flex items-center justify-between gap-sm">
                             <div class="flex items-center gap-xs min-w-0">
@@ -232,8 +231,7 @@
                         {{-- Progress bar --}}
                         <div class="w-full h-2 bg-surface-container-highest border border-outline-variant overflow-hidden">
                             <div class="h-full transition-all duration-700 ease-out"
-                                style="background-color: {{ $slice['color'] }};"
-                                x-bind:style="animated ? 'width: {{ $slice['barPct'] }}%' : 'width: 0%'">
+                                x-bind:style="'background-color: {{ $slice['color'] }}; width: ' + (animated ? {{ $slice['barPct'] }} : 0) + '%;'">
                             </div>
                         </div>
                     </div>
