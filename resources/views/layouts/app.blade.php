@@ -80,8 +80,9 @@
                     <x-theme-toggle size="h-10 w-10" />
 
                     <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" aria-label="Account" class="w-10 h-10 flex items-center justify-center text-primary active:translate-y-0.5 transition-transform">
-                            <span class="material-symbols-outlined text-2xl">account_circle</span>
+                        <button @click="open = !open" aria-label="Account" class="w-10 h-10 flex items-center justify-center active:translate-y-0.5 transition-transform">
+                            <img src="{{ auth()->user()->avatarUrl() }}" alt="Foto profil"
+                                 class="w-9 h-9 rounded-full border-2 border-outline-variant object-cover">
                         </button>
                         <div x-show="open" @click.outside="open = false" x-cloak
                              class="absolute right-0 mt-xs w-48 bg-surface-container border-2 border-outline-variant neo-shadow z-50">
@@ -155,7 +156,7 @@
                 </div>
             @endif
             <!-- Main Content -->
-            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
+            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid grid-cols-1 w-full min-w-0 gap-md"> {{-- NEW: grid-cols-1 + w-full + min-w-0 mencegah <main> melebar mengikuti intrinsic width konten (mis. SVG donut chart 200px di dashboard) sehingga halaman mepet ke kanan di mobile --}}
                 {{ $slot }}
             </main>
         </div>

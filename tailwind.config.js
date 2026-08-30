@@ -97,7 +97,7 @@ export default {
         lg: '40px',
         xl: '64px',
         gutter: '16px',
-        'margin-mobile': '16px',
+        'margin-mobile': '22px',
         'margin-desktop': '32px',
       },
     },

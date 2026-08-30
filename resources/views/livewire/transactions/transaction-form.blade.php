@@ -41,9 +41,25 @@
                         {{-- Amount --}}
                         <div class="flex flex-col gap-xs">
                             <x-input-label for="amount" value="NOMINAL" />
-                            <div class="relative">
+                            <div class="relative"
+                                x-data="{
+                                    amount: @entangle('amount'),
+                                    display: '',
+                                    formatFrom(raw) {
+                                        raw = String(raw ?? '').replace(/\D/g, '');
+                                        return raw ? new Intl.NumberFormat('id-ID').format(raw) : '';
+                                    },
+                                    onInput(e) {
+                                        let raw = e.target.value.replace(/\D/g, '');
+                                        this.amount = raw ? parseInt(raw, 10) : '';
+                                        this.display = this.formatFrom(raw);
+                                    }
+                                }"
+                                x-init="display = formatFrom(amount)"
+                            >
                                 <span class="absolute left-4 top-1/2 -translate-y-1/2 font-display text-headline-md text-secondary pointer-events-none">Rp</span>
-                                <input wire:model="amount" id="amount" type="number" min="0" step="1" placeholder="0"
+                                <input type="text" inputmode="numeric" autocomplete="off" placeholder="0"
+                                    x-model="display" @input="onInput($event)"
                                     class="w-full bg-surface-container border-2 border-outline h-16 pl-14 pr-4 font-display text-headline-md text-on-surface text-right focus:border-primary focus:ring-0 focus:outline-none transition-colors rounded-none" />
                             </div>
                             <x-input-error :messages="$errors->get('amount')" />
