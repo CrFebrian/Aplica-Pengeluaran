@@ -3,7 +3,7 @@
     class="tx-card tx-enter group relative flex items-center gap-2 sm:gap-sm p-2.5 sm:p-sm bg-surface-container border-2 border-outline-variant shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] transition-all mb-2">
     <div class="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center border-2 border-outline-variant shrink-0 {{ $transaction->type === 'income' ? 'bg-secondary' : 'bg-tertiary' }} group-hover:rotate-6 transition-transform">
         <span class="material-symbols-outlined {{ $transaction->type === 'income' ? 'text-on-secondary' : 'text-on-tertiary' }} text-lg sm:text-2xl">
-            {{ $transaction->type === 'income' ? 'payments' : 'shopping_bag' }}
+            {{ \App\Models\Category::iconFor($transaction->category->name, $transaction->type) }}
         </span>
     </div>
     <div class="flex-1 min-w-0 flex flex-col justify-center">

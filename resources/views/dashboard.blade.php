@@ -270,7 +270,7 @@
                         <div class="flex items-center gap-xs sm:gap-sm min-w-0">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 shrink-0 bg-surface-container-highest border-2 border-outline-variant flex items-center justify-center text-on-surface">
                                 <span class="material-symbols-outlined text-lg sm:text-xl">
-                                    {{ $transaction->type === 'income' ? 'payments' : 'shopping_bag' }}
+                                    {{ \App\Models\Category::iconFor($transaction->category->name, $transaction->type) }}
                                 </span>
                             </div>
                             <div class="flex flex-col gap-0 sm:gap-base min-w-0">
