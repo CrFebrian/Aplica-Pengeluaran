@@ -22,11 +22,11 @@
                         {{-- Type Tabs --}}
                         <div class="flex gap-2">
                             <button type="button" wire:click="$set('type', 'income')"
-                                class="flex-1 border-2 border-outline py-2 text-center font-display text-title-sm transition-colors {{ $type === 'income' ? 'bg-secondary text-on-secondary neo-shadow-success' : 'bg-surface text-on-surface-variant hover:bg-surface-container-high' }}">
+                                class="flex-1 border-2 border-outline py-1.5 sm:py-2 text-center font-display text-sm sm:text-title-sm transition-colors {{ $type === 'income' ? 'bg-secondary text-on-secondary neo-shadow-success' : 'bg-surface text-on-surface-variant hover:bg-surface-container-high' }}">
                                 Pemasukan
                             </button>
                             <button type="button" wire:click="$set('type', 'expense')"
-                                class="flex-1 border-2 border-outline py-2 text-center font-display text-title-sm transition-colors {{ $type === 'expense' ? 'bg-tertiary text-on-tertiary neo-shadow-danger' : 'bg-surface text-on-surface-variant hover:bg-surface-container-high' }}">
+                                class="flex-1 border-2 border-outline py-1.5 sm:py-2 text-center font-display text-sm sm:text-title-sm transition-colors {{ $type === 'expense' ? 'bg-tertiary text-on-tertiary neo-shadow-danger' : 'bg-surface text-on-surface-variant hover:bg-surface-container-high' }}">
                                 Pengeluaran
                             </button>
                         </div>

@@ -181,8 +181,18 @@
                     <template x-if="hovered === -1">
                         <div class="flex flex-col items-center gap-0.5">
                             <span class="font-sans text-label-caps text-on-surface-variant">TOTAL SALDO</span>
-                            <span class="font-display text-title-sm text-on-surface text-center leading-tight px-2">
-                                Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+                            @php
+                                $saldoShort = $totalSaldo >= 10000000
+                                    ? number_format($totalSaldo / 1000000, 0, ',', '.') . ' Juta'
+                                    : 'Rp ' . number_format($totalSaldo, 0, ',', '.');
+                            @endphp
+                            <span class="font-display text-title-sm sm:text-base md:text-title-sm text-on-surface text-center leading-tight px-2">
+                                <span class="sm:hidden md:hidden">
+                                    {{ $saldoShort }}
+                                </span>
+                                <span class="hidden sm:inline">
+                                    Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+                                </span>
                             </span>
                         </div>
                     </template>
