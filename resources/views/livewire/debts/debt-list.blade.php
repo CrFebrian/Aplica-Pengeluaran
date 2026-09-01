@@ -36,7 +36,8 @@
                 $isDueToday = ! $debt->is_paid && $debt->due_date && $debt->due_date->isToday();
             @endphp
             <div wire:key="debt-{{ $debt->id }}"
-                class="relative bg-surface-container border-2 {{ $isOverdue ? 'border-tertiary' : 'border-outline-variant' }} p-sm shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex flex-col gap-sm">
+                style="--tx-delay: {{ ($loop->index % 6) * 50 }}ms"
+                class="tx-card tx-enter relative bg-surface-container border-2 {{ $isOverdue ? 'border-tertiary' : 'border-outline-variant' }} p-sm shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex flex-col gap-sm">
 
                 <div class="flex justify-between items-start gap-sm">
                     <div class="flex flex-col">

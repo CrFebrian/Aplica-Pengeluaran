@@ -104,4 +104,51 @@
     @keyframes success-tick-check-draw {
         to { stroke-dashoffset: 0; }
     }
+
+    /* Animasi histori transaksi — muncul dari bawah dengan fade */
+    .tx-enter {
+        opacity: 0;
+        animation: tx-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation-delay: var(--tx-delay, 0ms);
+    }
+    @keyframes tx-rise {
+        from {
+            opacity: 0;
+            transform: translateY(14px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Hover: kartu transaksi terangkat & bayangan lebih tegas */
+    .tx-card {
+        transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .tx-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px 0px rgb(var(--color-shadow-ink));
+    }
+    .tx-card:active {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px 0px rgb(var(--color-shadow-ink));
+    }
+
+    /* Animasi halaman — kartu/petak muncul dari bawah bertahap */
+    .page-enter {
+        opacity: 0;
+        animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation-delay: var(--page-delay, 0ms);
+    }
+    @keyframes page-rise {
+        from {
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }

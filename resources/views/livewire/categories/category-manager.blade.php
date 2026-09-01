@@ -49,7 +49,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm">
         @forelse ($categories as $category)
             <div wire:key="cat-{{ $category->id }}"
-                class="bg-surface-container border-2 border-outline-variant p-2 md:p-sm shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
+                style="--tx-delay: {{ ($loop->index % 6) * 50 }}ms"
+                class="tx-card tx-enter bg-surface-container border-2 border-outline-variant p-2 md:p-sm shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
                 <div class="flex items-center gap-2 md:gap-sm min-w-0">
                     <div class="w-8 h-8 md:w-11 md:h-11 shrink-0 flex items-center justify-center border-2 border-outline-variant bg-surface">
                         <span class="material-symbols-outlined text-on-surface text-lg md:text-2xl">{{ $iconFor($category->name) }}</span>

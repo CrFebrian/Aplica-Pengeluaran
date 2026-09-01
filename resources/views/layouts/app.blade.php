@@ -21,10 +21,15 @@
     <body class="font-sans text-body-md antialiased bg-background text-on-background min-h-screen md:flex" x-data="{ sidebarOpen: false }">
         <aside class="hidden md:flex md:w-64 md:shrink-0 md:flex-col md:h-screen md:sticky md:top-0 bg-surface-container border-r-2 border-outline-variant">
 
-            <div class="flex items-center gap-2 p-md border-b-2 border-outline-variant">
+            <div class="flex items-center gap-2 p-md">
                 <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
                 <span class="font-display text-title-sm text-primary truncate flex-1">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
                 <x-theme-toggle size="h-8 w-8" />
+            </div>
+
+            <div class="px-sm pb-1 pt-5 flex items-center gap-3">
+                <span class="font-sans text-xs uppercase tracking-[0.15em] font-bold text-on-surface-variant/70">Menu</span>
+                <span class="flex-1 h-[2px] bg-outline-variant"></span>
             </div>
 
             <nav class="flex flex-col gap-1 p-sm">
