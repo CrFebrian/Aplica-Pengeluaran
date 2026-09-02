@@ -1,17 +1,5 @@
 @php
-    $iconFor = function (string $name) {
-        $name = strtolower($name);
-        return match (true) {
-            str_contains($name, 'makan') || str_contains($name, 'minum') => 'restaurant',
-            str_contains($name, 'bensin') || str_contains($name, 'transport') || str_contains($name, 'bbm') => 'directions_car',
-            str_contains($name, 'gaji') || str_contains($name, 'freelance') || str_contains($name, 'usaha') => 'payments',
-            str_contains($name, 'listrik') || str_contains($name, 'tagihan') || str_contains($name, 'internet') => 'receipt_long',
-            str_contains($name, 'belanja') => 'shopping_bag',
-            str_contains($name, 'hiburan') || str_contains($name, 'nonton') || str_contains($name, 'film') => 'movie',
-            str_contains($name, 'jajan') || str_contains($name, 'bonus') || str_contains($name, 'hadiah') => 'redeem',
-            default => 'label',
-        };
-    };
+    $iconFor = fn (string $name, string $type) => \App\Models\Category::iconFor($name, $type);
 @endphp
 
 <div class="flex flex-col gap-md">
@@ -49,10 +37,11 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm">
         @forelse ($categories as $category)
             <div wire:key="cat-{{ $category->id }}"
-                class="bg-surface-container border-2 border-outline-variant p-2 md:p-sm shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
+                style="--tx-delay: {{ ($loop->index % 6) * 50 }}ms"
+                class="tx-card tx-enter bg-surface-container border-2 border-outline-variant p-2 md:p-sm shadow-[3px_3px_0px_0px_rgb(var(--color-shadow-ink))] md:shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] flex items-center justify-between gap-sm">
                 <div class="flex items-center gap-2 md:gap-sm min-w-0">
                     <div class="w-8 h-8 md:w-11 md:h-11 shrink-0 flex items-center justify-center border-2 border-outline-variant bg-surface">
-                        <span class="material-symbols-outlined text-on-surface text-lg md:text-2xl">{{ $iconFor($category->name) }}</span>
+                        <span class="material-symbols-outlined text-on-surface text-lg md:text-2xl">{{ $iconFor($category->name, $category->type) }}</span>
                     </div>
                     <span class="font-sans text-sm md:text-body-lg text-on-surface truncate">{{ $category->name }}</span>
                 </div>
@@ -110,10 +99,12 @@
                     </div>
 
                     <div class="p-md border-t-2 border-outline bg-surface-container">
-                        <button type="submit"
+                        <button type="submit" wire:loading.attr="disabled"
                             class="w-full bg-primary text-white font-display text-title-sm py-4 border-2 border-outline neo-shadow-primary active:translate-x-[2px] active:translate-y-[2px] active:shadow-[4px_4px_0px_0px_#4f46e5] transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined">save</span>
-                            SIMPAN
+                            <span class="material-symbols-outlined" wire:loading.remove wire:target="save">save</span>
+                            <span class="material-symbols-outlined animate-spin" wire:loading wire:target="save">progress_activity</span>
+                            <span wire:loading.remove wire:target="save">SIMPAN</span>
+                            <span wire:loading wire:target="save">MENYIMPAN...</span>
                         </button>
                     </div>
                 </form>
@@ -170,9 +161,10 @@
                         class="flex-1 px-4 py-2 bg-surface-container-low text-on-surface border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgb(var(--color-shadow-ink))] transition-all">
                         BATAL
                     </button>
-                    <button type="button" wire:click="delete"
+                    <button type="button" wire:click="delete" wire:loading.attr="disabled"
                         class="flex-1 px-4 py-2 bg-tertiary text-on-tertiary border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#7f1d1d] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#7f1d1d] transition-all">
-                        YA, HAPUS
+                        <span wire:loading.remove wire:target="delete">YA, HAPUS</span>
+                        <span wire:loading wire:target="delete">MENGHAPUS...</span>
                     </button>
                 </div>
             </div>

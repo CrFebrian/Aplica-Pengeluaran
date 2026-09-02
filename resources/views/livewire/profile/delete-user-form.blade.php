@@ -76,8 +76,9 @@ new class extends Component
                     {{ __('Batal') }}
                 </x-secondary-button>
 
-                <x-danger-button>
-                    {{ __('Hapus Akun') }}
+                <x-danger-button wire:loading.attr="disabled">
+                    <span wire:loading.remove wire:target="deleteUser">{{ __('Hapus Akun') }}</span>
+                    <span wire:loading wire:target="deleteUser">{{ __('Menghapus...') }}</span>
                 </x-danger-button>
             </div>
         </form>

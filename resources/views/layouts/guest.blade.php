@@ -41,7 +41,7 @@
                     <x-theme-toggle size="h-10 w-10" />
                 </div>
                 <div class="w-full max-w-[420px] mx-auto relative z-10">
-                    <div class="mb-xl flex flex-col items-center gap-sm text-center md:flex-row md:items-center md:gap-3 md:text-left">
+                    <div class="mb-xl flex items-center justify-center gap-sm text-center mt-16 sm:mt-12 md:mt-0">
                         <a href="{{ url('/') }}" wire:navigate class="inline-block shrink-0 transition-transform hover:-translate-y-0.5 active:translate-y-0">
                             <x-app-logo size="h-12 w-12" fallback-class="text-xl" />
                         </a>

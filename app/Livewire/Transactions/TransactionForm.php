@@ -29,7 +29,20 @@ class TransactionForm extends Component
             'type' => 'required|in:income,expense',
             'title' => 'required|string|max:50',
             'amount' => 'required|numeric|min:1',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => [
+                'required',
+                'exists:categories,id',
+                function ($attribute, $value, $fail) {
+                    $exists = Category::where('id', $value)
+                        ->where('user_id', auth()->id())
+                        ->where('type', $this->type)
+                        ->exists();
+
+                    if (! $exists) {
+                        $fail('Kategori tidak valid.');
+                    }
+                },
+            ],
             'transaction_date' => 'required|date',
             'note' => 'nullable|string|max:1000',
         ];

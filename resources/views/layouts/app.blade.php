@@ -21,10 +21,15 @@
     <body class="font-sans text-body-md antialiased bg-background text-on-background min-h-screen md:flex" x-data="{ sidebarOpen: false }">
         <aside class="hidden md:flex md:w-64 md:shrink-0 md:flex-col md:h-screen md:sticky md:top-0 bg-surface-container border-r-2 border-outline-variant">
 
-            <div class="flex items-center gap-2 p-md border-b-2 border-outline-variant">
+            <div class="flex items-center gap-2 p-md">
                 <x-app-logo size="h-8 w-8" fallback-class="text-sm" />
                 <span class="font-display text-title-sm text-primary truncate flex-1">{{ strtoupper(config('app.name', 'KapanRich')) }}</span>
                 <x-theme-toggle size="h-8 w-8" />
+            </div>
+
+            <div class="px-sm pb-1 pt-5 flex items-center gap-3">
+                <span class="font-sans text-xs uppercase tracking-[0.15em] font-bold text-on-surface-variant/70">Menu</span>
+                <span class="flex-1 h-[2px] bg-outline-variant"></span>
             </div>
 
             <nav class="flex flex-col gap-1 p-sm">
@@ -80,8 +85,9 @@
                     <x-theme-toggle size="h-10 w-10" />
 
                     <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" aria-label="Account" class="w-10 h-10 flex items-center justify-center text-primary active:translate-y-0.5 transition-transform">
-                            <span class="material-symbols-outlined text-2xl">account_circle</span>
+                        <button @click="open = !open" aria-label="Account" class="w-10 h-10 flex items-center justify-center active:translate-y-0.5 transition-transform">
+                            <img src="{{ auth()->user()->avatarUrl() }}" alt="Foto profil"
+                                 class="w-9 h-9 rounded-full border-2 border-outline-variant object-cover">
                         </button>
                         <div x-show="open" @click.outside="open = false" x-cloak
                              class="absolute right-0 mt-xs w-48 bg-surface-container border-2 border-outline-variant neo-shadow z-50">
@@ -155,7 +161,7 @@
                 </div>
             @endif
             <!-- Main Content -->
-            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid gap-md">
+            <main class="px-margin-mobile pt-md pb-xl md:px-margin-desktop max-w-screen-2xl mx-auto grid grid-cols-1 w-full min-w-0 gap-md"> {{-- NEW: grid-cols-1 + w-full + min-w-0 mencegah <main> melebar mengikuti intrinsic width konten (mis. SVG donut chart 200px di dashboard) sehingga halaman mepet ke kanan di mobile --}}
                 {{ $slot }}
             </main>
         </div>

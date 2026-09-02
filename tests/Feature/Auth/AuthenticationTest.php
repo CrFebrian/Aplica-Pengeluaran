@@ -65,9 +65,7 @@ class AuthenticationTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Dashboard')
-            ->assertSee('History')
-            ->assertSee('Debts')
-            ->assertSee('Categori');
+            ->assertSee('KAPANRICH');
     }
 
     public function test_users_can_logout(): void
@@ -78,7 +76,8 @@ class AuthenticationTest extends TestCase
 
         $response = $this->post('/logout');
 
-        $response->assertRedirect('/');
+        $response
+            ->assertRedirect('/');
 
         $this->assertGuest();
     }

@@ -54,8 +54,9 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
+            <x-primary-button wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="confirmPassword">{{ __('Confirm') }}</span>
+                <span wire:loading wire:target="confirmPassword">{{ __('Memproses...') }}</span>
             </x-primary-button>
         </div>
     </form>

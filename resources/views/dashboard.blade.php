@@ -181,8 +181,18 @@
                     <template x-if="hovered === -1">
                         <div class="flex flex-col items-center gap-0.5">
                             <span class="font-sans text-label-caps text-on-surface-variant">TOTAL SALDO</span>
-                            <span class="font-display text-title-sm text-on-surface text-center leading-tight px-2">
-                                Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+                            @php
+                                $saldoShort = $totalSaldo >= 10000000
+                                    ? number_format($totalSaldo / 1000000, 0, ',', '.') . ' Juta'
+                                    : 'Rp ' . number_format($totalSaldo, 0, ',', '.');
+                            @endphp
+                            <span class="font-display text-title-sm sm:text-base md:text-title-sm text-on-surface text-center leading-tight px-2">
+                                <span class="sm:hidden md:hidden">
+                                    {{ $saldoShort }}
+                                </span>
+                                <span class="hidden sm:inline">
+                                    Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+                                </span>
                             </span>
                         </div>
                     </template>
@@ -248,39 +258,39 @@
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-md items-start">
         <!-- Recent Transactions (kolom kiri, lebih lebar) -->
         <section class="lg:col-span-3 bg-surface-container border-2 border-outline-variant neo-shadow overflow-hidden">
-            <div class="p-sm border-b-2 border-outline-variant bg-surface-container-high flex items-center justify-between">
-                <h3 class="font-display text-title-sm text-on-surface">TRANSAKSI TERAKHIR</h3>
-                <a href="{{ Route::has('transactions.index') ? route('transactions.index') : '#' }}" wire:navigate class="font-sans text-body-md font-bold text-primary hover:underline">
+            <div class="p-xs sm:p-sm border-b-2 border-outline-variant bg-surface-container-high flex items-center justify-between">
+                <h3 class="font-sans text-label-caps text-on-surface">TRANSAKSI TERAKHIR</h3>
+                <a href="{{ Route::has('transactions.index') ? route('transactions.index') : '#' }}" wire:navigate class="font-sans text-xs sm:text-body-sm font-bold text-primary hover:underline">
                     Lihat Semua
                 </a>
             </div>
             <div class="flex flex-col">
                 @forelse ($recentTransactions as $transaction)
-                    <div class="transaction-row p-sm flex items-center justify-between hover:bg-surface-container-highest transition-colors cursor-pointer">
-                        <div class="flex items-center gap-sm min-w-0">
-                            <div class="w-10 h-10 shrink-0 bg-surface-container-highest border-2 border-outline-variant flex items-center justify-center text-on-surface">
-                                <span class="material-symbols-outlined">
-                                    {{ $transaction->type === 'income' ? 'payments' : 'shopping_bag' }}
+                    <div class="transaction-row p-xs sm:p-sm flex items-center justify-between hover:bg-surface-container-highest transition-colors cursor-pointer">
+                        <div class="flex items-center gap-xs sm:gap-sm min-w-0">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 shrink-0 bg-surface-container-highest border-2 border-outline-variant flex items-center justify-center text-on-surface">
+                                <span class="material-symbols-outlined text-lg sm:text-xl">
+                                    {{ \App\Models\Category::iconFor($transaction->category->name, $transaction->type) }}
                                 </span>
                             </div>
-                            <div class="flex flex-col gap-base min-w-0">
-                                <div class="font-sans text-body-lg text-on-surface truncate">{{ $transaction->title }}</div>
+                            <div class="flex flex-col gap-0 sm:gap-base min-w-0">
+                                <div class="font-sans text-sm sm:text-body-md text-on-surface truncate">{{ $transaction->title }}</div>
                                 <div class="flex items-center gap-xs flex-wrap">
-                                    <span class="bg-surface-container-highest text-on-surface-variant px-2 py-1 font-sans text-label-caps border-2 border-outline-variant">
+                                    <span class="bg-surface-container-highest text-on-surface-variant px-1 py-0.5 sm:px-2 sm:py-1 font-sans text-[10px] sm:text-label-caps border border-outline-variant leading-none">
                                         {{ $transaction->category->name }}
                                     </span>
-                                    <span class="font-sans text-label-caps text-on-surface-variant">
+                                    <span class="font-sans text-[10px] sm:text-label-caps text-on-surface-variant leading-none">
                                         {{ $transaction->transaction_date->isToday() ? $transaction->created_at->format('H:i') : $transaction->transaction_date->translatedFormat('d M') }}
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="font-sans text-mono-data shrink-0 {{ $transaction->type === 'income' ? 'text-income' : 'text-expense' }}">
+                        <div class="font-sans text-xs sm:text-mono-data shrink-0 {{ $transaction->type === 'income' ? 'text-income' : 'text-expense' }}">
                             {{ $transaction->type === 'income' ? '+' : '-' }}Rp {{ number_format($transaction->amount, 0, ',', '.') }}
                         </div>
                     </div>
                 @empty
-                    <div class="p-sm text-center font-sans text-body-md text-on-surface-variant">
+                    <div class="p-xs sm:p-sm text-center font-sans text-body-md text-on-surface-variant">
                         Belum ada transaksi. Yuk mulai catat!
                     </div>
                 @endforelse

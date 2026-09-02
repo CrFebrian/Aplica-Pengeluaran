@@ -23,9 +23,26 @@
 
                         <div class="flex flex-col gap-xs">
                             <x-input-label for="amount" value="NOMINAL" />
-                            <div class="relative">
+                            {{-- NEW: format titik ribuan otomatis saat mengetik, tanpa perlu migrasi/kolom baru --}}
+                            <div class="relative"
+                                x-data="{
+                                    amount: @entangle('amount'),
+                                    display: '',
+                                    formatFrom(raw) {
+                                        raw = String(raw ?? '').replace(/\D/g, '');
+                                        return raw ? new Intl.NumberFormat('id-ID').format(raw) : '';
+                                    },
+                                    onInput(e) {
+                                        let raw = e.target.value.replace(/\D/g, '');
+                                        this.amount = raw ? parseInt(raw, 10) : '';
+                                        this.display = this.formatFrom(raw);
+                                    }
+                                }"
+                                x-init="display = formatFrom(amount)"
+                            >
                                 <span class="absolute left-4 top-1/2 -translate-y-1/2 font-display text-headline-md text-warning pointer-events-none">Rp</span>
-                                <input wire:model="amount" id="amount" type="number" min="0" step="1" placeholder="0"
+                                <input type="text" inputmode="numeric" autocomplete="off" placeholder="0"
+                                    x-model="display" @input="onInput($event)"
                                     class="w-full bg-surface-container border-2 border-outline h-16 pl-14 pr-4 font-display text-headline-md text-on-surface text-right focus:border-primary focus:ring-0 focus:outline-none transition-colors rounded-none" />
                             </div>
                             <x-input-error :messages="$errors->get('amount')" />
@@ -47,10 +64,12 @@
                     </div>
 
                     <div class="p-md border-t-2 border-outline bg-surface-container mt-auto shrink-0">
-                        <button type="submit"
+                        <button type="submit" wire:loading.attr="disabled"
                             class="w-full bg-warning text-on-warning font-display text-title-sm py-4 border-2 border-outline neo-shadow-warning active:translate-x-[2px] active:translate-y-[2px] active:shadow-[4px_4px_0px_0px_#fbbf24] transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined">save</span>
-                            SIMPAN
+                            <span class="material-symbols-outlined" wire:loading.remove wire:target="save">save</span>
+                            <span class="material-symbols-outlined animate-spin" wire:loading wire:target="save">progress_activity</span>
+                            <span wire:loading.remove wire:target="save">SIMPAN</span>
+                            <span wire:loading wire:target="save">MENYIMPAN...</span>
                         </button>
                     </div>
                 </form>
