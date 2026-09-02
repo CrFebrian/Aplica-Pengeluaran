@@ -34,7 +34,12 @@ new #[Layout('layouts.guest')] class extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        $this->redirect(
+            $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail
+                ? route('verification.notice', absolute: false)
+                : route('dashboard', absolute: false),
+            navigate: true
+        );
     }
 }; ?>
 
@@ -78,8 +83,9 @@ new #[Layout('layouts.guest')] class extends Component
             <a class="underline text-sm text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}" wire:navigate>
                 {{ __('Already registered?') }}
             </a>
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
+            <x-primary-button class="ms-4" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="register">{{ __('Register') }}</span>
+                <span wire:loading wire:target="register">{{ __('Registering...') }}</span>
             </x-primary-button>
         </div>
     </form>

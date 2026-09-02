@@ -90,9 +90,10 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div class="pt-sm">
-            <x-primary-button class="w-full">
-                {{ __('Masuk') }}
-                <span class="material-symbols-outlined text-[20px]">login</span>
+            <x-primary-button class="w-full" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="login">{{ __('Masuk') }}</span>
+                <span wire:loading wire:target="login">{{ __('Memproses...') }}</span>
+                <span class="material-symbols-outlined text-[20px]" wire:loading.remove wire:target="login">login</span>
             </x-primary-button>
         </div>
     </form>

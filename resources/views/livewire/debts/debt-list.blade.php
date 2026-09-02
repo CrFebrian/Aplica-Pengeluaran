@@ -144,9 +144,10 @@
                         class="flex-1 px-4 py-2 bg-surface-container-low text-on-surface border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgb(var(--color-shadow-ink))] transition-all">
                         BATAL
                     </button>
-                    <button type="button" wire:click="markAsPaid"
+                    <button type="button" wire:click="markAsPaid" wire:loading.attr="disabled"
                         class="flex-1 px-4 py-2 bg-primary text-white border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#4f46e5] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#4f46e5] transition-all">
-                        YA, LUNAS
+                        <span wire:loading.remove wire:target="markAsPaid">YA, LUNAS</span>
+                        <span wire:loading wire:target="markAsPaid">MEMPROSES...</span>
                     </button>
                 </div>
             </div>

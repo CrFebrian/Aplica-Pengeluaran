@@ -108,10 +108,12 @@
 
                     {{-- Modal Footer --}}
                     <div class="p-md border-t-2 border-outline bg-surface-container mt-auto shrink-0">
-                        <button type="submit"
+                        <button type="submit" wire:loading.attr="disabled"
                             class="w-full bg-primary text-white font-display text-title-sm py-4 border-2 border-outline neo-shadow-primary active:translate-x-[2px] active:translate-y-[2px] active:shadow-[4px_4px_0px_0px_#4f46e5] transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined">save</span>
-                            SIMPAN
+                            <span class="material-symbols-outlined" wire:loading.remove wire:target="save">save</span>
+                            <span class="material-symbols-outlined animate-spin" wire:loading wire:target="save">progress_activity</span>
+                            <span wire:loading.remove wire:target="save">SIMPAN</span>
+                            <span wire:loading wire:target="save">MENYIMPAN...</span>
                         </button>
                     </div>
                 </form>

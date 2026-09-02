@@ -99,10 +99,12 @@
                     </div>
 
                     <div class="p-md border-t-2 border-outline bg-surface-container">
-                        <button type="submit"
+                        <button type="submit" wire:loading.attr="disabled"
                             class="w-full bg-primary text-white font-display text-title-sm py-4 border-2 border-outline neo-shadow-primary active:translate-x-[2px] active:translate-y-[2px] active:shadow-[4px_4px_0px_0px_#4f46e5] transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined">save</span>
-                            SIMPAN
+                            <span class="material-symbols-outlined" wire:loading.remove wire:target="save">save</span>
+                            <span class="material-symbols-outlined animate-spin" wire:loading wire:target="save">progress_activity</span>
+                            <span wire:loading.remove wire:target="save">SIMPAN</span>
+                            <span wire:loading wire:target="save">MENYIMPAN...</span>
                         </button>
                     </div>
                 </form>
@@ -159,9 +161,10 @@
                         class="flex-1 px-4 py-2 bg-surface-container-low text-on-surface border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_rgb(var(--color-shadow-ink))] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgb(var(--color-shadow-ink))] transition-all">
                         BATAL
                     </button>
-                    <button type="button" wire:click="delete"
+                    <button type="button" wire:click="delete" wire:loading.attr="disabled"
                         class="flex-1 px-4 py-2 bg-tertiary text-on-tertiary border-2 border-outline-variant font-sans text-label-caps font-bold shadow-[4px_4px_0px_0px_#7f1d1d] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_#7f1d1d] transition-all">
-                        YA, HAPUS
+                        <span wire:loading.remove wire:target="delete">YA, HAPUS</span>
+                        <span wire:loading wire:target="delete">MENGHAPUS...</span>
                     </button>
                 </div>
             </div>
