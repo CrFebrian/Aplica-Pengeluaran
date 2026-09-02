@@ -25,10 +25,6 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <p class="font-sans text-body-md text-on-surface-variant mb-md">
-        Masukkan Email untuk mengakses akunmu.
-    </p>
-
     <!-- Session Status -->
     <x-auth-session-status class="mb-md block" :status="session('status')" />
 
@@ -47,9 +43,35 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <!-- Password -->
-        <div class="flex flex-col gap-xs">
+        <div class="flex flex-col gap-xs" x-data="{ showPassword: false, timer: null }">
             <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="form.password" id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+            <div class="relative" dir="ltr">
+                <x-text-input
+                    wire:model="form.password"
+                    id="password"
+                    x-bind:type="showPassword ? 'text' : 'password'"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                    placeholder="••••••••"
+                    class="pr-12"
+                />
+                <button
+                    type="button"
+                    x-on:click="
+                        showPassword = !showPassword;
+                        clearTimeout(timer);
+                        if (showPassword) {
+                            timer = setTimeout(() => showPassword = false, 30000);
+                        }
+                    "
+                    :aria-label="showPassword ? 'Sembunyikan password' : 'Lihat password'"
+                    style="right: 4px; top: 50%; transform: translateY(-50%);"
+                    class="absolute flex h-8 w-8 items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container focus:outline-none focus-visible:ring-2 focus-visible:ring-inverse-primary transition-colors"
+                >
+                    <span class="material-symbols-outlined text-[22px] leading-none select-none" x-text="showPassword ? 'visibility_off' : 'visibility'">visibility</span>
+                </button>
+            </div>
             <x-input-error :messages="$errors->get('form.password')" />
         </div>
 
