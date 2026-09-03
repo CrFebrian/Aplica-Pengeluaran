@@ -98,4 +98,40 @@ class ProfileTest extends TestCase
 
         $this->assertNotNull($user->fresh());
     }
+
+    public function test_password_can_be_updated(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        Volt::test('profile.update-password-form')
+            ->set('current_password', 'password')
+            ->set('password', 'new-password-123')
+            ->set('password_confirmation', 'new-password-123')
+            ->call('updatePassword')
+            ->assertHasNoErrors();
+
+        $this->assertTrue(
+            \Illuminate\Support\Facades\Hash::check('new-password-123', $user->fresh()->password)
+        );
+    }
+
+    public function test_wrong_current_password_rejects_update(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        Volt::test('profile.update-password-form')
+            ->set('current_password', 'wrong-password')
+            ->set('password', 'new-password-123')
+            ->set('password_confirmation', 'new-password-123')
+            ->call('updatePassword')
+            ->assertHasErrors(['current_password']);
+
+        $this->assertTrue(
+            \Illuminate\Support\Facades\Hash::check('password', $user->fresh()->password)
+        );
+    }
 }
