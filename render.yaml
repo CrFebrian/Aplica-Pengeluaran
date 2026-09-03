@@ -1,0 +1,46 @@
+# NEW: Render Blueprint untuk KapanRich
+# Database TIDAK didefinisikan di sini karena dipisah ke Aiven (bukan Render)
+
+services:
+  - type: web
+    name: kapanrich
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: APP_NAME
+        value: KapanRich
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false          # NEW: isi manual di dashboard, hasil dari `php artisan key:generate --show`
+      - key: APP_URL
+        sync: false          # NEW: isi setelah tahu subdomain Render kamu, misal https://kapanrich.onrender.com
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_LEVEL
+        value: error
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        sync: false          # NEW: isi dari Aiven (Service URI host)
+      - key: DB_PORT
+        sync: false          # NEW: isi dari Aiven (biasanya bukan 3306, cek dashboard)
+      - key: DB_DATABASE
+        value: defaultdb     # NEW: nama default database di Aiven, sesuaikan kalau beda
+      - key: DB_USERNAME
+        sync: false          # NEW: isi dari Aiven
+      - key: DB_PASSWORD
+        sync: false          # NEW: isi dari Aiven
+      - key: MYSQL_ATTR_SSL_CA
+        value: /var/www/html/storage/certs/aiven-ca.pem   # NEW: wajib, Aiven mengharuskan koneksi SSL
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_ENCRYPT
+        value: "true"
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
