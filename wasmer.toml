@@ -1,0 +1,21 @@
+# NEW: Konfigurasi Wasmer Edge untuk KapanRich
+# Pengganti Dockerfile — Wasmer otomatis sediakan runtime PHP-nya
+
+[package]
+name = "kapanrich"
+version = "0.1.0"
+description = "KapanRich - Personal finance tracker"
+
+[dependencies]
+"php/php" = "=8.3.4"
+
+[fs]
+"/app/" = "."
+
+[[command]]
+name = "run"
+module = "php/php:php"
+runner = "wasi"
+
+[command.annotations.wasi]
+main-args = ["-t", "/app/public", "-S", "localhost:8080"]
